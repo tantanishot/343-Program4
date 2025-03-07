@@ -3,7 +3,8 @@
 
 
 #include <iostream> 
-#include <string> 
+#include <string>
+#include "item.h"
 
 class DVD : public Item{
 

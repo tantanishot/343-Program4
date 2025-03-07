@@ -1,18 +1,14 @@
 #ifndef HISTORY_H_
 #define HISTORY_H_
 
-
 #include <iostream> 
-#include <string> 
+#include <string>
+#include "transactions.h"
 
-class History : public Transactions{
-
-
-
-
-
-
+class HISTORY :  public Transactions
+{
+    public:
+        bool processMovie();
 };
-
 
 #endif

@@ -1,11 +1,11 @@
-#ifndef ITEMS_H_
-#define ITEMS_H_
+#ifndef ITEM_H_
+#define ITEM_H_
 
 
 #include <iostream> 
 #include <string> 
 
-class Items{
+class Item{
 
 
 
