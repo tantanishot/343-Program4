@@ -1,19 +1,14 @@
 #ifndef DVD_H_
 #define DVD_H_
 
-
-#include <iostream> 
-#include <string>
 #include "item.h"
 
-class DVD : public Item{
-
-
-
-
-
-
+class DVD : public Item
+{
+    public:
+        virtual string getDVDType() const = 0;
+    protected:
+        string DVDType;
 };
-
 
 #endif

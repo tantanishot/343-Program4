@@ -1,18 +1,17 @@
 #ifndef ITEM_H_
 #define ITEM_H_
 
-
 #include <iostream> 
-#include <string> 
+#include <string>
 
-class Item{
+using namespace std;
 
-
-
-
-
-
+class Item
+{
+    public:
+        virtual string getItemType() const = 0;
+    protected:
+        string itemType;
 };
-
 
 #endif
