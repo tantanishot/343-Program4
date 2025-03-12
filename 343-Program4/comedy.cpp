@@ -1,14 +1,11 @@
 #include "comedy.h"
 
-Comedy::Comedy(int movStock, string movDirector, string movTitle, int movRelease)
+Comedy::Comedy(int movStock, string movDirector, string movTitle, int movRelease) 
+ :  Movie(movStock, movDirector, movTitle, movRelease) //Call base class(mandatory)
 {
     itemType = "D"; // D for dvd
     DVDType = "M";  // M for movie
     code = "F";     // F for funny
-    stock = movStock;
-    director = movDirector;
-    title = movTitle;
-    releaseYear = movRelease;
 }
 
 string Comedy::formatSortCriteria() const

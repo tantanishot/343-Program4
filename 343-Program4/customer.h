@@ -12,7 +12,7 @@ class Customer
 {
     public:
         Customer();
-
+        Customer(int id, string name);
         int getID() const;
         string getName() const;
         void displayHistory() const;
@@ -23,8 +23,10 @@ class Customer
         bool operator==(const Customer* customerPtr) const;
 
     private: 
-        string ID;
+        int ID;
         string name;
+        //each customer will store their history    
+        //where first index is their oldest transaction
         vector<pastTransactions> history;
 };
 

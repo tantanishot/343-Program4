@@ -14,12 +14,12 @@ Movie::Movie(int movStock, string movDirector, string movTitle, int movRelease) 
     title = movTitle;
     releaseYear = movRelease;
 }
-// ✅ Implement getDVDType() (since Movie inherits from DVD)
+// Implement getDVDType() (since Movie inherits from DVD)
 string Movie::getDVDType() const {
     return "DVD";
 }
 
-// ✅ Implement getItemType() (since Movie inherits from Item)
+//  Implement getItemType() (since Movie inherits from Item)
 string Movie::getItemType() const {
     return "Movie";
 }

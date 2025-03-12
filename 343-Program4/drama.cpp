@@ -1,14 +1,11 @@
 #include "drama.h"
 
 Drama::Drama(int movStock, string movDirector, string movTitle, int movRelease) 
+        : Movie(movStock, movDirector, movTitle, movRelease) //call base class (mandatory)
 {
     itemType = "D"; // D for dvd
     DVDType = "M";  // M for movie
     code = "D";     // D for drama
-    stock = movStock;
-    director = movDirector;
-    title = movTitle;
-    releaseYear = movRelease;
 }
 
 string Drama::formatSortCriteria() const {

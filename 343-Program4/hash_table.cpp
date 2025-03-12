@@ -83,16 +83,37 @@ template <typename T>
 int HashTable<T>::getKeyFromInt(const int value, const int steps) const
 {
     int x1, x2;
-    if (value < 10) // single digit
+    //fixed bug here where array subscripts of int type is an int not stiring
+    //so we cant access its digits using array subscripts
+    string convertedValue = to_string(value);
+    if (convertedValue.length() == 1) // single digit
     {
         x1 = value;
         x2 = value * value;
     }
     else // multi digit
     {
-        string convertedValue = to_string(value);
-        x1 = (int) value[0] + (int) value[1];
-        x2 = (int) value[0] * (int) value[1];
+        //Had this error with this line 
+                /* hash_table.cpp: In member function ‘int HashTable<T>::getKeyFromInt(int, int) const’:
+            hash_table.cpp:94:27: error: invalid types ‘const int[int]’ for array subscript
+                    x1 = (int) value[0] + (int) value[1];
+                                    ^
+            hash_table.cpp:94:44: error: invalid types ‘const int[int]’ for array subscript
+                    x1 = (int) value[0] + (int) value[1];
+                                                        ^
+            hash_table.cpp:95:27: error: invalid types ‘const int[int]’ for array subscript
+                    x2 = (int) value[0] * (int) value[1];
+                                    ^
+            hash_table.cpp:95:44: error: invalid types ‘const int[int]’ for array subscript
+                    x2 = (int) value[0] * (int) value[1];
+                
+                */
+        //string convertedValue = to_string(value);
+        //x1 = (int) value[0] + (int) value[1];
+        //x2 = (int) value[0] * (int) value[1];
+
+        x1 = (int) convertedValue[0] + (int) convertedValue[1];
+        x2 = (int) convertedValue[0] * (int) convertedValue[1];
     }
 
     return ((x1 % 53) + ((37 - (x2 % 37)) * steps)) % TABLE_SIZE;

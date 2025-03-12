@@ -1,17 +1,11 @@
 #include "classics.h"
 
-Classics::Classics(int movStock, string movDirector, string movTitle, int movReleaseMon, int movReleaseYr, string firstName, string lastName)
+Classics::Classics(int movStock, string movDirector, string movTitle, int movReleaseMon, int movReleaseYr, string firstName, string lastName) 
+        :  Movie(movStock, movDirector, movTitle, movReleaseYr), releaseMonth(movReleaseMon), MAFirstName(firstName), MALastName(lastName)
 {
     itemType = "D"; // D for dvd
     DVDType = "M";  // M for movie
     code = "C";     // C for classics
-    stock = movStock;
-    director = movDirector;
-    title = movTitle;
-    releaseMonth = movReleaseMon;
-    releaseYear = movReleaseYr;
-    MAFirstName = firstName;
-    MALastName = lastName;
 }
 
 string Classics::formatSortCriteria() const {

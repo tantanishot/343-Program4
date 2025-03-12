@@ -6,7 +6,7 @@
 using namespace std;
 
 int main() {
-    // ✅ Use Movie pointers instead of objects
+    // Use Movie pointers instead of objects
     Movie* comedy1 = new Comedy(10, "Nora Ephron", "You've Got Mail", 1998);
     Movie* comedy2 = new Comedy(10, "Rob Reiner", "When Harry Met Sally", 1989);
     
@@ -16,21 +16,21 @@ int main() {
     Movie* classic1 = new Classics(10, "Michael Curtiz", "Casablanca", 8, 1942, "Ingrid", "Bergman");
     Movie* classic2 = new Classics(10, "Victor Fleming", "Gone With the Wind", 2, 1939, "Clark", "Gable");
 
-    // 🔹 Test formatSortCriteria()
+    //Test formatSortCriteria()
     cout << "Comedy Sorting Key: " << comedy1->formatSortCriteria() << endl;
     cout << "Drama Sorting Key: " << drama1->formatSortCriteria() << endl;
     cout << "Classics Sorting Key: " << classic1->formatSortCriteria() << endl;
 
-    // 🔹 Test operator<
+    // Test operator<
     cout << "Comparing Comedies (Should be 0): " << (*comedy1 < comedy2) << endl;
     cout << "Comparing Dramas (Should be 1): " << (*drama2 < drama1) << endl;
     cout << "Comparing Classics (Should be 1): " << (*classic2 < classic1) << endl;
 
-    // 🔹 Test operator==
+    //  Test operator==
     cout << "Are these Dramas equal? (Should be 0): " << (*drama1 == drama2) << endl;
     cout << "Are these Classics equal? (Should be 0): " << (*classic1 == classic2) << endl;
 
-    // ✅ Cleanup
+    // Cleanup
     delete comedy1;
     delete comedy2;
     delete drama1;
