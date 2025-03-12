@@ -3,16 +3,21 @@
 
 #include "movie.h"
 
-class Classics : public Movie {
+class Classics : public Movie
+{
     public:
-        Classics(int movStock, string movDirector, string movTitle, int releaseMonth, int releaseYear, string firstName, string lastName);
+        Classics(int movStock, string movDirector, string movTitle, int movReleaseMon, int movReleaseYr, string firstName, string lastName);
         
         string formatSortCriteria() const override;
         bool operator<(const Movie* moviePtr) const override;
+        bool operator>(const Movie* moviePtr) const override;
         bool operator==(const Movie* moviePtr) const override;
+
+        string getItemType() const override;
+        string getDVDType() const override;
+        void print() const override;
     
     private:
-        //split release month and year for easier sorting
         int releaseMonth;
         int releaseYear;
         string MAFirstName;

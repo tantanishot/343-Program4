@@ -1,43 +1,33 @@
 #ifndef HASH_TABLE_H
 #define HASH_TABLE_H
 
-
 #include <iostream> 
 #include <string> 
 #include "linked_list.h"
-#include "movie.h" //parent class for all movie types
+#include "movie.h"
+#include "customer.h"
 
 using namespace std;
 
-const int TABLE_SIZE = 101;
+const int TABLE_SIZE = 101; // change to be a prime number greater than or equal to expected # of items
 
 template <typename T>
-class HashTable{
-
+class HashTable
+{
     public:
         HashTable();
         ~HashTable();
 
-        bool insert(const string& key, T* itemPtr); //insert movie
-        T* search(const string& key); //search for movie
-        bool remove(const string& key); // Remove movie from talbe
-        void display() const; //Print all stored movies 
+        bool insertString(const string value, const T* objectPtr);  // insert object using string to get key
+        bool insertInt(const int value, const T* objectPtr);     // insert object using int to get key
+        void display() const; // Print all stored movies 
 
     private:
-        struct Bucket{
-            string key;
-            LinkedList<T> value;
-            bool occupied;
+        T* table[TABLE_SIZE]; // Fixed size array for hash table
 
-            Bucket(): key(""), occupied(false) {}
-        };
-
-        Bucket table[TABLE_SIZE]; //Fixed size array for hash table
-
-        int hashFunction(const string& key) const; //Hash function to the index 
-
-       
+        // getKey functions (h(x))
+        int getKeyFromString(const string value, const int steps) const;
+        int getKeyFromInt(const int value, const int steps) const;
 };
-
 
 #endif

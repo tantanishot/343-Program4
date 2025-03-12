@@ -8,7 +8,7 @@
 class Return :  public Transactions
 {
     public:
-        bool processMovie();
+        bool processMovie(Movie* moviePtr);
 };
 
 #endif

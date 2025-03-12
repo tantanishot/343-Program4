@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+                                    // MAY DELETE IMPLEMENTATION
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #ifndef LINKED_LIST_H_
 #define LINKED_LIST_H_
 
@@ -11,23 +15,23 @@ using namespace std;
 template <typename T>
 struct Node
 {
-    T* objPtr;
+    T* objectPtr;
     Node* next;
-    Node() : objPtr(nullptr), next(nullptr) {}
+    Node() : objectPtr(nullptr), next(nullptr) {}
 };
 
 template <typename T>
 class LinkedList
 {
     public:
-    LinkedList();  // Constructor to initialize the linked list
-    bool addItem(T* itemPtr);  // Add an item to the linked list
-    T* searchItem(const std::string& key) const;  // Search for an item by its key
-    void display() const;  // Display the linked list (for debugging)
+        LinkedList();  // Constructor to initialize the linked list
+        bool sortedAdd(T* objectPtr);  // Add an object to the linked list
+        // access to first item (head) for comparisons?
+        bool isEmpty() const;
+        void display() const;  // Display the linked list (for debugging)
     
     private:
         Node<T>* head;
 };
-
 
 #endif

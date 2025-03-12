@@ -1,7 +1,6 @@
 #ifndef TRANSACTIONS_H_
 #define TRANSACTIONS_H_
 
-
 #include <iostream> 
 #include <string>
 #include "movie.h"
@@ -11,15 +10,13 @@ struct pastTransactions
 {
     string status;
     Movie* moviePtr;
+    pastTransactions() : status(""), moviePtr(nullptr) {}
 };
 
 class Transactions
 {
     public:
-        Transactions();
-        virtual bool processMovie(Movie* mov) = 0; // true if movie was successfully added, false if not
-        friend struct pastTransactions; // not sure if this is how it's done but customer class needs access too
+        virtual bool processMovie(Movie* moviePtr) = 0; // true if movie was successfully added, false if not
 };
-
 
 #endif
