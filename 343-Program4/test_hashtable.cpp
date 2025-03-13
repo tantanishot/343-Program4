@@ -3,7 +3,7 @@
 #include "comedy.h"
 #include "drama.h"
 #include "classics.h"
-//#include "customer.h"
+#include "customer.h"
 
 using namespace std;
 
@@ -29,19 +29,19 @@ int main() {
 
     cout << "\n=== Movie Hash Table ===" << endl;
     movieTable.display();
-    /*
-        HashTable<Customer> customerTable;
+    
+    HashTable<Customer> customerTable;
 
    
-    Customer* customer1 = new Customer(1234, "Mouse", "Mickey");
-    Customer* customer2 = new Customer(5678, "Mouse", "Minnie");
+    Customer* customer1 = new Customer(1234, "Mickey Mouse");
+    Customer* customer2 = new Customer(5678, "Minnie Mouse");
 
     customerTable.insertInt(customer1->getID(), customer1);
     customerTable.insertInt(customer2->getID(), customer2);
 
 
     cout << "\n=== Customer Hash Table ===" << endl;
-    customerTable.display()
-    */
+    customerTable.display();
+    
     return 0;
 }
