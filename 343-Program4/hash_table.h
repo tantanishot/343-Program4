@@ -11,7 +11,7 @@ using namespace std;
 
 const int TABLE_SIZE = 101; // change to be a prime number greater than or equal to expected # of items
 
-template <typename T>
+template <class T>
 class HashTable
 {
     public:
@@ -23,6 +23,8 @@ class HashTable
         void display() const; // Print all stored movies 
 
     private:
+        //made it const since pointers stored cant be modified after assigned
+        //since
         T* table[TABLE_SIZE]; // Fixed size array for hash table
 
         // getKey functions (h(x))
@@ -30,4 +32,6 @@ class HashTable
         int getKeyFromInt(const int value, const int steps) const;
 };
 
+
+//#include "hash_table.cpp"
 #endif

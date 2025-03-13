@@ -1,5 +1,9 @@
 #include "hash_table.h"
 
+
+template class HashTable<Movie>;
+//template class HashTable<Customer>;
+
 template <typename T>
 HashTable<T>::HashTable() {
     for (int i = 0; i < TABLE_SIZE; i++) // sets pointers to nullptr (empty array)
@@ -126,7 +130,7 @@ void HashTable<T>::display() const
     {
         if (table[i] != nullptr)
         {
-            T* objectPtr = table[i];
+            const T* objectPtr = table[i];
             cout << "Index: " << i << ", Contents: ";
             objectPtr->print();
             objectPtr = nullptr;
@@ -137,5 +141,10 @@ void HashTable<T>::display() const
 template <typename T>
 HashTable<T>::~HashTable()
 {
-    delete[] table;
+    //delete[] table;
+    //You have to delete each individual pointer
+    for (int i = 0; i < TABLE_SIZE; i++)
+    {
+        delete table[i];
+    }
 }
