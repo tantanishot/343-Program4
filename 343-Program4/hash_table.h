@@ -3,9 +3,9 @@
 
 #include <iostream> 
 #include <string> 
-#include "linked_list.h"
+//#include "linked_list.h"
 #include "movie.h"
-#include "customer.h"
+//#include "customer.h"
 
 using namespace std;
 

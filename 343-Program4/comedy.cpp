@@ -56,6 +56,13 @@ string Comedy::getCode() const
     return code;
 }
 
+string Comedy::getTitle() const {
+    return title;
+}
+
+string Comedy::getDirector() const {
+    return director;
+}
 void Comedy::print() const
 {
     cout << itemType << ", " << code << ", " << to_string(stock) << ", " << director << ", " << title << ", " <<

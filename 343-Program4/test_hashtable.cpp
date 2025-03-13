@@ -3,7 +3,7 @@
 #include "comedy.h"
 #include "drama.h"
 #include "classics.h"
-#include "customer.h"
+//#include "customer.h"
 
 using namespace std;
 

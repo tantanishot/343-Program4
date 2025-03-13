@@ -55,6 +55,14 @@ string Drama::getCode() const
     return code;
 }
 
+string Drama::getTitle() const {
+    return title;
+}
+
+string Drama::getDirector() const {
+    return director;
+}
+
 void Drama::print() const
 {
     cout << itemType << ", " << code << ", " << to_string(stock) << ", " << director << ", " << title << ", " <<

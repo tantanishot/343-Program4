@@ -12,6 +12,9 @@ string Classics::formatSortCriteria() const {
     return to_string(releaseMonth) + " " + to_string(releaseYear) + " " + MAFirstName + " " + MALastName;
 }
 
+
+
+
 bool Classics::operator<(const Movie* moviePtr) const {
     const Classics* classicsPtr = dynamic_cast<const Classics*>(moviePtr);
     if (classicsPtr == nullptr) return false;
@@ -67,6 +70,14 @@ string Classics::getDVDType() const
 string Classics::getCode() const
 {
     return code;
+}
+
+string Classics::getTitle() const {
+    return title;
+}
+
+string Classics::getDirector() const {
+    return director;
 }
 
 void Classics::print() const
