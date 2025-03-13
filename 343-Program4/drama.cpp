@@ -50,6 +50,11 @@ string Drama::getDVDType() const
     return DVDType;
 }
 
+string Drama::getCode() const
+{
+    return code;
+}
+
 void Drama::print() const
 {
     cout << itemType << ", " << code << ", " << to_string(stock) << ", " << director << ", " << title << ", " <<

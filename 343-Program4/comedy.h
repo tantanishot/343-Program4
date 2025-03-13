@@ -15,6 +15,7 @@ class Comedy : public Movie
 
         string getItemType() const;
         string getDVDType() const;
+        string getCode() const override;
         void print() const;
 };
 

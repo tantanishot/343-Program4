@@ -64,6 +64,11 @@ string Classics::getDVDType() const
     return DVDType;
 }
 
+string Classics::getCode() const
+{
+    return code;
+}
+
 void Classics::print() const
 {
     cout << itemType << ", " << code << ", " << to_string(stock) << ", " << director << ", " << title << ", " <<

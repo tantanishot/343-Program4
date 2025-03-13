@@ -3,7 +3,10 @@
 
 #include <iostream> 
 #include <string>
-#include "movie.h"
+#include "hash_table.h"
+#include "classics.h"
+#include "comedy.h"
+#include "drama.h"
 #include "customer.h"
 
 struct pastTransactions
@@ -13,10 +16,11 @@ struct pastTransactions
     pastTransactions() : status(""), moviePtr(nullptr) {}
 };
 
+template <typename T>
 class Transactions
 {
     public:
-        virtual bool processMovie(Movie* moviePtr) = 0; // true if movie was successfully added, false if not
+        virtual bool processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable) = 0; // true if movie was successfully added, false if not
 };
 
 #endif

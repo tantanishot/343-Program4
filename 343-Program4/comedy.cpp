@@ -51,6 +51,11 @@ string Comedy::getDVDType() const
     return DVDType;
 }
 
+string Comedy::getCode() const
+{
+    return code;
+}
+
 void Comedy::print() const
 {
     cout << itemType << ", " << code << ", " << to_string(stock) << ", " << director << ", " << title << ", " <<

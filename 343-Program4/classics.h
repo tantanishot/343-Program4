@@ -15,6 +15,7 @@ class Classics : public Movie
 
         string getItemType() const override;
         string getDVDType() const override;
+        string getCode() const override;
         void print() const override;
     
     private:

@@ -9,6 +9,9 @@
 
 using namespace std;
 
+const int NUM_GENRES = 3;
+
+template <typename T>
 class ProcessData
 {
     public:
@@ -16,11 +19,12 @@ class ProcessData
         void processCommands();
 
     private:
-        HashTable storedMovies;
-        HashTable storedCustomers;
+        HashTable<T>*[3] storedMovies;
+        HashTable<T>*[3] storedCustomers;
 
         void initializeMovieData(ifstream &stream);
         void initializeCustomerData(ifstream &stream);
 };
 
+#include "process_data.cpp"
 #endif

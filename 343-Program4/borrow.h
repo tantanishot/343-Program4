@@ -5,10 +5,12 @@
 #include <string>
 #include "transactions.h"
 
+template <typename T>
 class Borrow :  public Transactions
 {
     public:
-        bool processMovie(Movie* mov, Customer* cust);
+        bool processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable) override;
 };
 
+#include "borrow.cpp"
 #endif
