@@ -8,16 +8,21 @@ class Classics : public Movie
     public:
         Classics(int movStock, string movDirector, string movTitle, int movReleaseMon, int movReleaseYr, string firstName, string lastName);
         
+        string getItemType() const override;
+        string getDVDType() const override;
+
+        string getCode() const override;
+        string getTitle() const override;
+        string getDirector() const override;
+
         string formatSortCriteria() const override;
+
         bool operator<(const Movie* moviePtr) const override;
         bool operator>(const Movie* moviePtr) const override;
         bool operator==(const Movie* moviePtr) const override;
 
-        string getItemType() const override;
-        string getDVDType() const override;
-        string getCode() const override;
         void print() const override;
-    
+
     private:
         int releaseMonth;
         int releaseYear;

@@ -13,14 +13,17 @@ class Customer
     public:
         Customer();
         Customer(int id, string name);
+
         int getID() const;
         string getName() const;
+
         void displayHistory() const;
-        bool recordTransaction(); // figuring this out still
 
         bool operator<(const Customer* customerPtr) const;
         bool operator>(const Customer* customerPtr) const;
         bool operator==(const Customer* customerPtr) const;
+
+        void print() const;
 
     private: 
         int ID;

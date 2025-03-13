@@ -8,15 +8,20 @@ class Comedy : public Movie
     public:
         Comedy(int movStock, string movDirector, string movTitle, int movRelease);
         
-        string formatSortCriteria() const;
-        bool operator<(const Movie* moviePtr) const;
-        bool operator>(const Movie* moviePtr) const;
-        bool operator==(const Movie* moviePtr) const;
+        string getItemType() const override;
+        string getDVDType() const override;
 
-        string getItemType() const;
-        string getDVDType() const;
         string getCode() const override;
-        void print() const;
+        string getTitle() const override;
+        string getDirector() const override;
+
+        string formatSortCriteria() const override;
+
+        bool operator<(const Movie* moviePtr) const override;
+        bool operator>(const Movie* moviePtr) const override;
+        bool operator==(const Movie* moviePtr) const override;
+
+        void print() const override;
 };
 
 #endif
