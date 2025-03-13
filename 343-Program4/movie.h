@@ -15,6 +15,13 @@ class Movie : public DVD
         virtual bool operator<(const Movie* moviePtr) const = 0;
         virtual bool operator>(const Movie* moviePtr) const = 0;
         virtual bool operator==(const Movie* moviePtr) const = 0;
+        /*
+        //Forgot to add missing method declarations
+        string getDVDType() const override;
+        string getItemType() const override;
+        void print() const override;
+        */
+    
 
     protected:
         string code;

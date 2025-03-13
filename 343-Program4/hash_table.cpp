@@ -1,7 +1,7 @@
 #include "hash_table.h"
 
 
-template class HashTable<Movie>;
+//template class HashTable<Movie>;
 //template class HashTable<Customer>;
 
 template <typename T>

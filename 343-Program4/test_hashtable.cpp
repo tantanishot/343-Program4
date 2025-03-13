@@ -41,26 +41,7 @@ int main() {
 
 
     cout << "\n=== Customer Hash Table ===" << endl;
-    customerTable.display();
-
-    
-    
+    customerTable.display()
     */
-
-
- 
-    delete comedy1;
-    delete comedy2;
-    delete drama1;
-    delete drama2;
-    delete classic1;
-    delete classic2;
-    /*
-    delete customer1;
-    delete customer2;
-    
-    */
-
-
     return 0;
 }
