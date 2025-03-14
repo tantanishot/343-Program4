@@ -1,12 +1,32 @@
 #include "process_data.h"
+#include <sstream>
+using namespace std;
 
-ProcessData::ProcessData()
-{
-    HashTable storedMovies; // maybe change later
-    HashTable storedCustomers;
+template <typename T>
+ProcessData<T>::ProcessData()
+{   
+    //create new 
+    storedCustomers = new HashTable<T>();
+
+    for (int i = 0; i < NUM_GENRES; i++)
+    {
+        storedMovies[i] = new HashTable<T>();
+    }
 }
 
-void ProcessData::processCommands()
+template <typename T>
+ProcessData<T>::~ProcessData()
+{
+    delete storedCustomers;
+
+    for (int i = 0; i < NUM_GENRES; i++)
+    {
+        delete storedMovies[i];
+    }
+}
+
+template <typename T>
+void ProcessData<T>::processCommands()
 {
     ifstream movieFile("data4movies.txt");
     if (!movieFile)
@@ -30,8 +50,8 @@ void ProcessData::processCommands()
         cout << "Command file could not be opened." << endl;
         return;
     }
-
-    // process command file line by line
+    /*
+      // process command file line by line
     int currentLine = 0;    // tracking the current line being read in file
     while (!commandFile.eof())
     {
@@ -75,4 +95,95 @@ void ProcessData::processCommands()
             cout << "Skipping line " << currentLine << "." << endl;
         }
     }
+    
+    
+    */
+  
 }
+
+//pass in a new movie object
+template <typename T>
+void ProcessData<T>::initializeMovieData(ifstream &stream)
+{
+    string line;
+    while(getline(stream, line))
+    {
+        stringstream ss(line);
+
+        string genre, director, title;
+        string firstActor, lastActor;
+        int stock, month = 0, year = 0;
+
+        ss >> genre;
+        ss.ignore();
+
+        ss >> stock;
+        ss.ignore();
+
+        getline(ss, director, ',');
+        getline(ss, title, ',');
+
+        if (genre == "C")  // If it's a Classics movie
+        {
+            ss >> firstActor >> lastActor >> month >> year;
+            cout << "[DEBUG] Extracted Classics - Actor: " << firstActor << " " << lastActor
+                 << ", Month: " << month << ", Year: " << year << endl;
+
+            Movie* newMovie = new Classics(stock, director, title, month, year, firstActor, lastActor);
+            storedMovies[2]->insertString(newMovie->formatSortCriteria(), newMovie);
+        }
+        else if (genre == "F")  // If it's a Comedy movie
+        {
+            ss >> year;
+            cout << "[DEBUG] Extracted Comedy - Year: " << year << endl;
+
+            Movie* newMovie = new Comedy(stock, director, title, year);
+            storedMovies[0]->insertString(newMovie->formatSortCriteria(), newMovie);
+        }
+        else if (genre == "D")  // If it's a Drama movie
+        {
+            ss >> year;
+            cout << "[DEBUG] Extracted Drama - Year: " << year << endl;
+
+            Movie* newMovie = new Drama(stock, director, title, year);
+            storedMovies[1]->insertString(newMovie->formatSortCriteria(), newMovie);
+        }
+        else
+        {
+            cout << "[ERROR] Invalid genre: " << genre << endl;
+        }
+
+    }
+}
+
+
+template <typename T>
+void ProcessData<T>::initializeCustomerData(ifstream &stream)
+{
+   
+}
+
+template <>
+void ProcessData<Movie>::displayStoredData()
+{
+    cout << "\n=== Movie Hash Table ===" << endl;
+    for (int i = 0; i < NUM_GENRES; i++)
+    {
+        if (storedMovies[i])
+        {
+            storedMovies[i]->display();
+        }
+    }
+}
+
+
+template <>
+void ProcessData<Customer>::displayStoredData()
+{
+    cout << "\n=== Customer Hash Table ===" << endl;
+    if (storedCustomers)
+    {
+        storedCustomers->display();
+    }
+}
+
