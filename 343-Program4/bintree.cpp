@@ -21,20 +21,20 @@
 // --------------------------------------------------------------------------------------------
 ostream &operator<<(ostream &stream, const BinTree &aBinTree)
 {
-  Node *nodePtr = aBinTree.root;
-  if (nodePtr == nullptr)
-  {
-    stream << "nullptr";
-  }
-  else
-  {
-    aBinTree.ostreamPrint(stream, nodePtr);
-  }
+    Node *nodePtr = aBinTree.root;
+    if (nodePtr == nullptr)
+    {
+        stream << "nullptr";
+    }
+    else
+    {
+        aBinTree.ostreamPrint(stream, nodePtr);
+    }
 
-  stream << endl;
-  nodePtr = nullptr;
+    stream << endl;
+    nodePtr = nullptr;
 
-  return stream;
+    return stream;
 }
 
 // ------------------------------------ constructor -------------------------------------------
