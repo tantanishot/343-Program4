@@ -33,6 +33,21 @@ string Classics::getDirector() const
     return director;
 }
 
+bool Classics::adjustStock(const bool increment)
+{
+    if (increment)
+    {
+        stock++;
+        return true;
+    }
+    if (stock > 0) // increment is false (decrement)
+    {
+        stock--;
+        return true;
+    }
+    return false; // cannot decrease stock below 0
+}
+
 bool Classics::isSimilar(Classics* classicsPtr)
 {
     // everything is the same except for main actor name

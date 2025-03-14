@@ -10,8 +10,11 @@ class Movie : public DVD
         : stock(movStock), director(movDirector), title(movTitle), releaseYear(movRelease) {}
 
         virtual string getCode() const = 0;
+        virtual int getStock() const = 0;
         virtual string getTitle() const = 0;
         virtual string getDirector() const = 0;
+
+        virtual bool adjustStock(const bool increment) = 0;
 
         virtual string formatSortCriteria() const = 0;
         

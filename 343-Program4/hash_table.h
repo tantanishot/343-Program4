@@ -3,7 +3,6 @@
 
 #include <iostream> 
 #include <string> 
-//#include "linked_list.h"
 #include "movie.h"
 #include "customer.h"
 
@@ -20,12 +19,18 @@ class HashTable
 
         bool insertString(const string value, T* objectPtr);  // insert object using string to get key
         bool insertInt(const int value, T* objectPtr);     // insert object using int to get key
+
+        int getStringIndex(const string value, const int steps) const;
+        int getIntIndex(const int value, const int steps) const;
+
+        T* atIndex(const int index) const;
+
         void display() const; // Print all stored movies 
 
     private:
         T* table[TABLE_SIZE]; // Fixed size array for hash table
 
-        // getKey functions (h(x))
+        // generate Key functions (h(x))
         int getKeyFromString(const string value, const int steps) const;
         int getKeyFromInt(const int value, const int steps) const;
 };
@@ -80,6 +85,24 @@ bool HashTable<T>::insertInt(const int value, T* newObjectPtr)
         steps++;
     }
     return false;
+}
+
+template <typename T>
+int HashTable<T>::getStringIndex(const string value, const int steps) const
+{
+    return getKeyFromString(value, steps);
+}
+
+template <typename T>
+int HashTable<T>::getIntIndex(const int value, const int steps) const
+{
+    return getKeyFromInt(value, steps);
+}
+
+template <typename T>
+T* HashTable<T>::atIndex(const int index) const
+{
+    return table[index];
 }
 
 // h(x1) = (x1 % 53)

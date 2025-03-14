@@ -63,6 +63,21 @@ string Drama::getDirector() const {
     return director;
 }
 
+bool Drama::adjustStock(const bool increment)
+{
+    if (increment)
+    {
+        stock++;
+        return true;
+    }
+    if (stock > 0) // increment is false (decrement)
+    {
+        stock--;
+        return true;
+    }
+    return false; // cannot decrease stock below 0
+}
+
 void Drama::print() const
 {
     cout << itemType << ", " << code << ", " << to_string(stock) << ", " << director << ", " << title << ", " <<

@@ -12,8 +12,11 @@ class Drama : public Movie
         string getDVDType() const override;
         
         string getCode() const override;
+        int getStock() const override;
         string getTitle() const override;
         string getDirector() const override;
+
+        bool adjustStock(const bool increment) override;
 
         string formatSortCriteria() const override;
 

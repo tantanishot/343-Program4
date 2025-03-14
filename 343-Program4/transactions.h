@@ -5,6 +5,7 @@
 #include <string>
 #include "process_data.h"
 #include "hash_table.h"
+#include "bintree.h"
 #include "classics.h"
 #include "comedy.h"
 #include "drama.h"
