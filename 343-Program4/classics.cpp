@@ -6,7 +6,6 @@ Classics::Classics(int movStock, string movDirector, string movTitle, int movRel
     itemType = "D"; // D for dvd
     DVDType = "M";  // M for movie
     code = "C";     // C for classics
-    numSimilarTitles = 0;
 }
 
 string Classics::getItemType() const
@@ -34,19 +33,8 @@ string Classics::getDirector() const
     return director;
 }
 
-int Classics::getNumSimilarTitles() const
+bool Classics::isSimilar(Classics* classicsPtr)
 {
-    return numSimilarTitles;
-}
-
-void Classics::incrementSimilarTitles()
-{
-    numSimilarTitles++;
-}
-
-bool Classics::isSimilar(Movie* moviePtr)
-{
-    const Classics* classicsPtr = dynamic_cast<const Classics*>(moviePtr);
     // everything is the same except for main actor name
     return (releaseMonth == classicsPtr->releaseMonth && releaseYear == classicsPtr->releaseYear &&
         director.compare(classicsPtr->director) == 0 && title.compare(classicsPtr->title) == 0 &&

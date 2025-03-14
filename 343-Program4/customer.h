@@ -17,6 +17,7 @@ class Customer
         int getID() const;
         string getName() const;
 
+        void addTransaction(pastTransactions newTransaction);
         void displayHistory() const;
 
         bool operator<(const Customer* customerPtr) const;

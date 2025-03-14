@@ -19,6 +19,12 @@ string Customer::getName() const{
     return name;
 }
 
+// assuming that same transaction doesnt exist and variables exist/are valid
+void Customer::addTransaction(pastTransactions newTransaction)
+{
+    history.insert(history.begin(), newTransaction);
+}
+
 //print the transactions 
 void Customer::displayHistory() const
 {

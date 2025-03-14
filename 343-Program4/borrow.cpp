@@ -8,7 +8,10 @@ bool Borrow<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T
     if (moviePtr->getCode().compare("C") == 0)
     {
         const Classics* classicsPtr = dynamic_cast<const Classics*>(moviePtr);
-        hashtable->
+        if (movieTree.hasObject(classicsPtr))
+        {
+            
+        }
     }
     else if (moviePtr->getCode().compare("F") == 0)
     {

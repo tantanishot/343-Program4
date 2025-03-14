@@ -15,9 +15,7 @@ class Classics : public Movie
         string getTitle() const override;
         string getDirector() const override;
 
-        int getNumSimilarTitles() const;
-        void incrementSimilarTitles();
-        bool isSimilar(Movie* moviePtr);
+        bool isSimilar(Classics* classicsPtr);
 
         string formatSortCriteria() const override;
 
@@ -31,7 +29,6 @@ class Classics : public Movie
         int releaseMonth;
         string MAFirstName;
         string MALastName;
-        int numSimilarTitles;
     };
 
 #endif
