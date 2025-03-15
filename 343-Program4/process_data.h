@@ -32,8 +32,8 @@ class ProcessData
 
     private:
         HashTable<T>* storedMovies[3];
-        HashTable<T>* storedCustomers;
-
+        HashTable<Customer>* storedCustomers;  
+        //to keep them sorted
         BinTree<T>* movieTree[3];
 };
 
@@ -48,12 +48,12 @@ template <typename T>
 ProcessData<T>::ProcessData()
 {   
     //create new 
-    storedCustomers = new HashTable<T>();
+    storedCustomers = new HashTable<Customer>();
 
     for (int i = 0; i < NUM_GENRES; i++)
     {
         storedMovies[i] = new HashTable<T>();
-        movieTree[i] = new HashTable<T>();
+        movieTree[i] = new BinTree<T>();
     }
 }
 
@@ -97,29 +97,75 @@ void ProcessData<T>::processCommands()
 
     // process command file line by line
     int currentLine = 0;    // tracking the current line being read in file
-    while (!commandFile.eof())
+    string line;
+    while (getline(commandFile, line)) //reading the full line instead in each part 
     {
-        string line;
-        getline(commandFile, line, ' ');    // gets first character indicating transaction
+ 
+       
         currentLine++;
-        
-        if (line.compare("B") == 0)         // borrow
+        stringstream ss(line);
+        string transactionType; 
+        ss >> transactionType; //Reading BRIH
+
+
+        if (transactionType == "B" || transactionType == "R")         // borrow
         {
             // make transaction object and use the inherited method
-            Borrow b;
-
+            //Borrow b;
             // obtain information from lines
-            getline(commandFile, line, ' ');
-            int customerID = stoi(line);
+            int customerID;
+            string mediaType, genre;
+            ss >> customerID >> mediaType >> genre; //the three common attributes
+            
+            //cout << "[READ] Borrow command at line " << currentLine << " for customer " << customerID << "\n";
+            
 
+
+            if(genre == "F")
+            {
+                string title;
+                int releaseYear;
+
+                getline(ss, title, ',');
+                ss >> releaseYear;
+                cout << "[READ] " << transactionType << " command at line " << currentLine 
+                << " for customer " << customerID << " - Comedy: " 
+                << "Title: " << title << ", Year: " << releaseYear << "\n";
+            }
+            else if(genre == "D") 
+            {
+                string director, title;
+                getline(ss, director, ',');  // Read director (until first comma)
+                getline(ss, title, ',');     // Read title (until second comma)
+                cout << "[READ] " << transactionType << " command at line " << currentLine 
+                << " for customer " << customerID << " - Drama: " 
+                << "Director: " << director << ", Title: " << title << "\n";
+            }
+            else if (genre == "C")  // Classics: Extract Month, Year, and Actor
+            {
+                int month, year;
+                string MAfirstName, MAlastName;
+                ss >> month >> year >> MAfirstName >> MAlastName;
+
+                cout << "[READ] " << transactionType << " command at line " << currentLine 
+                     << " for customer " << customerID << " - Classics: " 
+                     << "Month: " << month << ", Year: " << year 
+                     << ", Actor: " << MAfirstName << " " << MAlastName << "\n";
+            }
+            else
+            {
+                cout << "[ERROR] Invalid genre '" << genre << "' at line " << currentLine << "\n";
+            }
+            
             // check if customerID exists in hashtable
+            /*
             int steps = 0;
             bool customerFound = false;
             while (!customerFound)
             {
                 
             }
-
+            */
             // check for valid item type
 
             // check for valid movie type
@@ -127,19 +173,28 @@ void ProcessData<T>::processCommands()
             // check last arguments to see if movie exists in corresponding hashtable
 
             // process movie if all valid arguments
-            b.processMovie();
+            //b.processMovie();
         }
-        else if (line.compare("R") == 0)    // return
+        else if (transactionType == "I")    // inventory
         {
+             //print all types of movies  
+             cout << "[READ] Inventory command at line " << currentLine << "\n";
+             cout << "Displaying Inventory:\n";
+ 
+            //from fdc
 
+           
         }
-        else if (line.compare("I") == 0)    // inventory
+        else if (transactionType == "H")    // history
         {
+            int customerID;
+            ss >> customerID;
+        
+            // Debug: Print when History is read
+            cout << "[READ] History command at line " << currentLine << " for customer " << customerID << "\n";
 
-        }
-        else if (line.compare("H") == 0)    // history
-        {
-
+           
+            //check if customer is in hashtable to print inventroy then pring transaction history
         }
         else                                // invalid commands
         {
@@ -154,7 +209,7 @@ template <typename T>
 void ProcessData<T>::initializeMovieData(ifstream &stream)
 {
     string line;
-   dfdd
+    while(getline(stream,line))
     {
         stringstream ss(line);
 
@@ -169,6 +224,13 @@ void ProcessData<T>::initializeMovieData(ifstream &stream)
 
         getline(ss, director, ',');
         getline(ss, title, ',');
+
+
+        cout << "[DEBUG] Processing line: " << line << endl;
+        cout << "[DEBUG] Parsed values - Genre: " << genre 
+             << ", Stock: " << stock 
+             << ", Director: " << director 
+             << ", Title: " << title << endl;
 
         if (genre == "C")  // If it's a Classics movie
         {
@@ -234,8 +296,8 @@ void ProcessData<T>::initializeCustomerData(ifstream &stream)
 
         cout << "[DEBUG] Reading Customer: ID=" << customerID << ", Name=" << fullName << endl;
 
-        Customer* newCustomer = new Customer(customerID, fullName);
-        storedCustomers->insertInt(customerID, newCustomer);
+        //Customer* newCustomer = new Customer(customerID, fullName);
+        storedCustomers->insertInt(customerID, new Customer(customerID, fullName));
     }
 }
 

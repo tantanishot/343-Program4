@@ -104,7 +104,8 @@ bool BinTree<T>::insert(T* objectPtr)
 
   Node<T>* nodePtr = root;
   Node<T>* parentNode = findParentNode(objectPtr, nodePtr);
-  if (parentNode == nullptr || objectPtr == parentNode)
+  //we need to check the dupe in the data not the templated node itself
+  if (parentNode == nullptr || objectPtr == parentNode->data)
   {
     nodePtr = nullptr;
     parentNode = nullptr;

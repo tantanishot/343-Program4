@@ -112,7 +112,7 @@ T* HashTable<T>::atIndex(const int index) const
     return table[index];
 }
 
-template <typename T>
+template <typename T> 
 int HashTable<T>::size() const
 {
     return TABLE_SIZE;
