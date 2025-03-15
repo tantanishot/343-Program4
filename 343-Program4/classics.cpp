@@ -34,7 +34,7 @@ string Classics::getDirector() const
 }
 
 int Classics::getStock() const {
-    return stock; 
+    return stock;   
 }
 
 bool Classics::adjustStock(const bool increment)

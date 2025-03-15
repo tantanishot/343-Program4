@@ -102,6 +102,11 @@ int HashTable<T>::getIntIndex(const int value, const int steps) const
 template <typename T>
 T* HashTable<T>::atIndex(const int index) const
 {
+    //bounds check
+    if (index < 0 || index >= TABLE_SIZE)  // Bounds check
+    {
+        return nullptr;
+    }
     return table[index];
 }
 

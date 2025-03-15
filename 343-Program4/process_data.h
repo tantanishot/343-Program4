@@ -147,7 +147,7 @@ template <typename T>
 void ProcessData<T>::initializeMovieData(ifstream &stream)
 {
     string line;
-    while(getline(stream, line))
+   dfdd
     {
         stringstream ss(line);
 
