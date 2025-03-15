@@ -1,4 +1,5 @@
 #include "bintree.h"
+//removing customer for now
 #include "customer.h"
 #include "item.h"
 

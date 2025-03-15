@@ -64,6 +64,10 @@ string Comedy::getDirector() const {
     return director;
 }
 
+int Comedy::getStock() const {
+    return stock;
+}
+
 bool Comedy::adjustStock(const bool increment)
 {
     if (increment)

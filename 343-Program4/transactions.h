@@ -3,7 +3,8 @@
 
 #include <iostream> 
 #include <string>
-#include "process_data.h"
+//temporary since process_data is not used in transactions
+//#include "process_data.h"
 #include "hash_table.h"
 #include "bintree.h"
 #include "classics.h"
@@ -22,7 +23,7 @@ template <typename T>
 class Transactions
 {
     public:
-        virtual bool processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable) = 0; // true if movie was successfully added, false if not
+        //virtual bool processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable) = 0; // true if movie was successfully added, false if not
 };
 
 #endif

@@ -63,6 +63,10 @@ string Drama::getDirector() const {
     return director;
 }
 
+int Drama::getStock() const {
+    return stock;
+}
+
 bool Drama::adjustStock(const bool increment)
 {
     if (increment)

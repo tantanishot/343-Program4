@@ -7,7 +7,9 @@
 #include "hash_table.h"
 #include "transactions.h"
 //Included types movie and customer
-#include "movie.h"
+#include "classics.h"
+#include "comedy.h"
+#include "drama.h"
 #include "customer.h"
 
 using namespace std;

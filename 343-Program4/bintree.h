@@ -34,7 +34,7 @@ class BinTree
     bool isEmpty() const; // check if tree is empty
 
     // assumes user isn't inserting different object types into tree
-    bool insert(const T* objectPtr); // insert node with the node data
+    bool insert(T* objectPtr); // insert node with the node data
 
     bool hasObject(const T* objectPtr) const;
 
@@ -64,7 +64,7 @@ class BinTree
 template <typename T>
 BinTree<T>::BinTree()
 {
-  root = new Node();
+  root = new Node<T>();
   root->data = nullptr;
   root->left = nullptr;
   root->right = nullptr;
@@ -88,7 +88,9 @@ bool BinTree<T>::isEmpty() const
 //                 tree
 // --------------------------------------------------------------------------------------------
 template <typename T>
-bool BinTree<T>::insert(const T* objectPtr)
+//objectPtr shouldnt be const since we will update the stock
+//while the rest of the methods should be fine with const,
+bool BinTree<T>::insert( T* objectPtr)
 {
   bool insertSuccess = false;
   if (objectPtr == nullptr)
@@ -114,7 +116,7 @@ bool BinTree<T>::insert(const T* objectPtr)
   {
     if (objectPtr < parentNode->data) // add in to left branch
     {
-      Node<T>* addNode = new Node();
+      Node<T>* addNode = new Node<T>();
       addNode->data = objectPtr;
       addNode->left = nullptr;
       addNode->right = nullptr;
@@ -124,7 +126,7 @@ bool BinTree<T>::insert(const T* objectPtr)
     }
     else if (objectPtr > parentNode->data) // add in to right branch
     {
-      Node<T>* addNode = new Node();
+      Node<T>* addNode = new Node<T>();
       addNode->data = objectPtr;
       addNode->left = nullptr;
       addNode->right = nullptr;
@@ -169,10 +171,17 @@ int BinTree<T>::findNumSimilarTitles(const T* objectPtr) const
   {
     return -1;
   }
+
   Node<T>* nodePtr = root;
-  int* i = 0;
-  int count = iterateAllSimilar(objectPtr, nodePtr, i);
-  i = nullptr;
+  //  //Was getting a segmentation fault here using the gdb debugger
+  //it rooted it here 
+  //the problem here is how is set to a nullptr
+  //"In C and C++, an integer constant expression with the value 0, when used as a pointer, is also a null pointer"
+  //int* i = 0;
+  int i = 0; 
+  int* countPtr = &i;
+  int count = iterateAllSimilar(objectPtr, nodePtr, countPtr);
+  //i = nullptr;
   nodePtr = nullptr;
   return count;
 }
@@ -264,17 +273,38 @@ template <typename T>
 int BinTree<T>::iterateAllSimilar(const T* objectPtr, Node<T>*& nodePtr, int*& count) const
 {
   // base case
-  if (nodePtr->data == nullptr)
+  //stop when the node pointer is null
+  if (nodePtr == nullptr || nodePtr->data == nullptr) // Add this check
   {
-    return 0;
+      return 0;
   }
-  if (objectPtr->isSimilar(nodePtr->data)) // check current node
+
+  const Classics* classicPtr = dynamic_cast<const Classics*>(objectPtr);
+  const Classics* nodeClassicPtr = dynamic_cast<const Classics*>(nodePtr->data);
+
+  if (classicPtr != nullptr && nodeClassicPtr != nullptr) {
+      if (classicPtr->isSimilar(nodeClassicPtr)) { // check current node
+          (*count)++;
+      }
+  }
+  
+  /*
+    if (objectPtr->isSimilar(nodePtr->data)) // check current node
   {
+    //correctly updates the count
     count++;
   }
-  updateAllSimilar(objectPtr, nodePtr->left, count);
-  updateAllSimilar(objectPtr, nodePtr->right, count);
-}
+  */
+ //did you mean iterateAllSimilar?
+  //updateAllSimilar(objectPtr, nodePtr->left, count);
+  //updateAllSimilar(objectPtr, nodePtr->right, count);
+
+  iterateAllSimilar(objectPtr, nodePtr->left, count);
+  iterateAllSimilar(objectPtr, nodePtr->right, count);
+
+
+  return *count; //Returns the final count
+} 
 
 // -------------------------------- printSidewaysTree -----------------------------------------
 // Description: helper function to displaySideways. prints the tree in sideways format by
@@ -295,7 +325,8 @@ void BinTree<T>::printSidewaysTree(Node<T>*& nodePtr, int indentTracker) const
     {
       cout << "    ";
     }
-    cout << nodePtr->data->print();
+    //data is a a void so its not a string
+    nodePtr->data->print();
   }
   if (nodePtr->left != nullptr)
   {

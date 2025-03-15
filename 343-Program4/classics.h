@@ -18,7 +18,7 @@ class Classics : public Movie
 
         bool adjustStock(const bool increment) override;
 
-        bool isSimilar(Classics* classicsPtr);
+        bool isSimilar(const Classics* classicsPtr) const;
 
         string formatSortCriteria() const override;
 

@@ -33,6 +33,10 @@ string Classics::getDirector() const
     return director;
 }
 
+int Classics::getStock() const {
+    return stock; 
+}
+
 bool Classics::adjustStock(const bool increment)
 {
     if (increment)
@@ -48,8 +52,14 @@ bool Classics::adjustStock(const bool increment)
     return false; // cannot decrease stock below 0
 }
 
-bool Classics::isSimilar(Classics* classicsPtr)
+bool Classics::isSimilar(const Classics* classicsPtr) const
 {
+
+    //perform null check
+    if (classicsPtr == nullptr)
+    {
+        return false;
+    } 
     // everything is the same except for main actor name
     return (releaseMonth == classicsPtr->releaseMonth && releaseYear == classicsPtr->releaseYear &&
         director.compare(classicsPtr->director) == 0 && title.compare(classicsPtr->title) == 0 &&
