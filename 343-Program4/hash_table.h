@@ -23,6 +23,12 @@ class HashTable
         int getStringIndex(const string value, const int steps) const;
         int getIntIndex(const int value, const int steps) const;
 
+        //checks and gets values
+        T* retrieveInt(const int value) const;
+        T* retrieveString(const string value) const;
+
+        //atIndex doesnt work since we cant find the movie
+        //since it doesnt handle collisions
         T* atIndex(const int index) const;
 
         int size() const;
@@ -87,6 +93,55 @@ bool HashTable<T>::insertInt(const int value, T* newObjectPtr)
         steps++;
     }
     return false;
+}
+
+
+
+//Added the intended checking the values in the hashtable
+template <typename T>
+T* HashTable<T>::retrieveString(const string value) const
+{
+    int steps = 0;
+    while (steps < TABLE_SIZE) // Search using double hashing
+    {
+        int index = getKeyFromString(value, steps);
+
+        if (table[index] == nullptr) // If we hit an empty slot, the item is not in the table
+        {
+            return nullptr;
+        }
+
+        if (table[index]->formatSortCriteria() == value) // Compare against stored key
+        {
+            return table[index]; // Found the item!
+        }
+
+        steps++; // Check next possible index (collision resolution)
+    }
+    return nullptr; // Not found after full traversal
+}
+
+template <typename T>
+T* HashTable<T>::retrieveInt(const int value) const
+{
+    int steps = 0;
+    while (steps < TABLE_SIZE)
+    {
+        int index = getKeyFromInt(value, steps);
+
+        if (table[index] == nullptr) // If we hit an empty slot, the customer is not in the table
+        {
+            return nullptr;
+        }
+
+        if (table[index]->getID() == value) // Compare against stored ID
+        {
+            return table[index]; // Found the customer!
+        }
+
+        steps++; // Check next possible index (collision resolution)
+    }
+    return nullptr; // Not found after full traversal
 }
 
 template <typename T>

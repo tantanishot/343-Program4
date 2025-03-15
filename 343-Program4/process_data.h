@@ -118,9 +118,8 @@ void ProcessData<T>::processCommands()
             ss >> customerID >> mediaType >> genre; //the three common attributes
             
             //cout << "[READ] Borrow command at line " << currentLine << " for customer " << customerID << "\n";
-            
 
-
+            Movie* foundMovie = nullptr;
             if(genre == "F")
             {
                 string title;
@@ -131,7 +130,11 @@ void ProcessData<T>::processCommands()
                 cout << "[READ] " << transactionType << " command at line " << currentLine 
                 << " for customer " << customerID << " - Comedy: " 
                 << "Title: " << title << ", Year: " << releaseYear << "\n";
+
+                string searchKey = title + ", " + to_string(releaseYear);
+                foundMovie = storedMovies[0]->retrieveString(searchKey); // Comedy table
             }
+            //each search key will be based on the title 
             else if(genre == "D") 
             {
                 string director, title;
@@ -140,6 +143,9 @@ void ProcessData<T>::processCommands()
                 cout << "[READ] " << transactionType << " command at line " << currentLine 
                 << " for customer " << customerID << " - Drama: " 
                 << "Director: " << director << ", Title: " << title << "\n";
+
+                string searchKey = director + ", " + title;
+                foundMovie = storedMovies[1]->retrieveString(searchKey); // Drama table
             }
             else if (genre == "C")  // Classics: Extract Month, Year, and Actor
             {
@@ -151,14 +157,88 @@ void ProcessData<T>::processCommands()
                      << " for customer " << customerID << " - Classics: " 
                      << "Month: " << month << ", Year: " << year 
                      << ", Actor: " << MAfirstName << " " << MAlastName << "\n";
+                
+                    string searchKey = to_string(month) + " " + to_string(year) + " " + MAfirstName + " " + MAlastName;
+                    foundMovie = storedMovies[2]->retrieveString(searchKey); // Classics table
             }
             else
             {
                 cout << "[ERROR] Invalid genre '" << genre << "' at line " << currentLine << "\n";
+                   continue; 
             }
             
             // check if customerID exists in hashtable
+            Customer* foundCustomer = storedCustomers->retrieveInt(customerID);
+            if(!foundCustomer)
+            {
+                cout << "[ERROR] Customer ID " << customerID << " not found at line " << currentLine << "\n";
+                continue; 
+            }
+            // check for valid item type
+            // Check if media type is valid
+            if (mediaType != "D") 
+            {
+                cout << "[ERROR] Invalid media type '" << mediaType 
+                    << "' for customer " << customerID << " at line " << currentLine << "\n";
+                continue; 
+            }
+
+            // check for valid movie type
+            // check last arguments to see if movie exists in corresponding hashtable
+            if(!foundMovie)
+            {
+                cout << "[ERROR] Movie not found in inventory at line " << currentLine << "\n";
+                continue; 
+            }
+            
+            cout << "[SUCCESS] Movie found: " << foundMovie->formatSortCriteria() << " at line " << currentLine << "\n";
+            
+            // process movie if all valid arguments
+            int genreIndex = -1;
+            if (genre == "F") genreIndex = 0;  // Comedy
+            else if (genre == "D") genreIndex = 1;  // Drama
+            else if (genre == "C") genreIndex = 2;  // Classics
+
+            if (transactionType == "B") { 
+                if (foundMovie->getStock() > 0) {
+                    Borrow<Movie> borrowTransaction;  // ✅ Create Borrow object
+                    bool success = borrowTransaction.processMovie(foundMovie, foundCustomer, storedMovies[genreIndex], movieTree[genreIndex]);
+            
+                    if (success) {
+                        cout << "[SUCCESS] Borrowed: " << foundMovie->formatSortCriteria() 
+                             << " for customer " << customerID << " at line " << currentLine << "\n";
+                    } else {
+                        cout << "[ERROR] Failed to borrow: " << foundMovie->formatSortCriteria() 
+                             << " at line " << currentLine << "\n";
+                    }
+                } else {
+                    cout << "[ERROR] Movie out of stock: " << foundMovie->formatSortCriteria() 
+                         << " at line " << currentLine << "\n";
+                }
+            }
+            
+            else if (transactionType == "R") { 
+                if (foundMovie->getStock() > 0) {
+                    Borrow<Movie> borrowTransaction;  // ✅ Create Borrow object
+                    bool success = borrowTransaction.processMovie(foundMovie, foundCustomer, storedMovies[genreIndex], movieTree[genreIndex]);
+            
+                    if (success) {
+                        cout << "[SUCCESS] Returned: " << foundMovie->formatSortCriteria() 
+                             << " for customer " << customerID << " at line " << currentLine << "\n";
+                    } else {
+                        cout << "[ERROR] Failed to return: " << foundMovie->formatSortCriteria() 
+                             << " at line " << currentLine << "\n";
+                    }
+                } else {
+                    cout << "[ERROR] Movie out of stock: " << foundMovie->formatSortCriteria() 
+                         << " at line " << currentLine << "\n";
+                }
+            }
+
+
             /*
+            //im not sure how you wanted to approach this... 
+            //regarding time im just going to try to finish the validations
             int steps = 0;
             bool customerFound = false;
             while (!customerFound)
@@ -166,14 +246,6 @@ void ProcessData<T>::processCommands()
                 
             }
             */
-            // check for valid item type
-
-            // check for valid movie type
-
-            // check last arguments to see if movie exists in corresponding hashtable
-
-            // process movie if all valid arguments
-            //b.processMovie();
         }
         else if (transactionType == "I")    // inventory
         {
@@ -296,6 +368,7 @@ void ProcessData<T>::initializeCustomerData(ifstream &stream)
 
         cout << "[DEBUG] Reading Customer: ID=" << customerID << ", Name=" << fullName << endl;
 
+        //doing that passed it in as movei for some reason
         //Customer* newCustomer = new Customer(customerID, fullName);
         storedCustomers->insertInt(customerID, new Customer(customerID, fullName));
     }
