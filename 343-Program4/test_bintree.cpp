@@ -5,29 +5,28 @@
 
 using namespace std;
 
-int main() // has not been tested yet
+int main() // possibility that operators arent evaluating correctly if tree doesnt follow order
 {
     BinTree<Movie> tree;
     // test inserting exact same movie
-    Movie* classic1 = new Classics(10, "classics1", "title1", 1, 1000, "first1", "last1");
+    Movie* classic1 = new Classics(10, "ddirector", "dtitle", 5, 5000, "dfirst", "dlast"); // root
     
-    // exact same parameters as classic1
-    Movie* classic1_dupe = new Classics(10, "classics1", "title1", 1, 1000, "first1", "last1");
+    // exact same parameters as classic1 so should not add to tree
+    Movie* classic1_dupe = new Classics(10, "ddirector", "dtitle", 5, 5000, "dfirst", "dlast"); // N/A
 
-    Movie* classic2 = new Classics(10, "classics1", "title1", 1, 1000, "first0", "last0");
-    Movie* classic3 = new Classics(10, "classics1", "title1", 1, 1000, "first3", "last3");
+    Movie* classic2 = new Classics(10, "bdirector", "btitle", 3, 3000, "bfirst", "blast"); // left
 
-    // for viewing placement in tree
-    Movie* classic4 = new Classics(10, "classics4", "title4", 4, 4000, "first4", "last4");
+    Movie* classic3 = new Classics(10, "bdirector", "btitle", 3, 3000, "cfirst", "clast"); // left right sim1
 
-    // viewing in tree
-    Movie* classic5 = new Classics(10, "classics1", "title1", 1, 1000, "first5", "last5");
+    Movie* classic4 = new Classics(10, "adirector", "atitle", 1, 1000, "afirst", "alast"); // left left
 
-    // different release date than classic1
-    Movie* classic6 = new Classics(10, "classics1", "title1", 6, 6000, "first1", "last1");
+    Movie* classic5 = new Classics(10, "edirector", "etitle", 7, 7000, "efirst", "elast"); // right
 
-    // unique entry
-    Movie* classic7 = new Classics(10, "classics7", "title7", 7, 7000, "first7", "last7");
+    Movie* classic6 = new Classics(10, "fdirector", "ftitle", 5, 5000, "ffirst", "flast"); // right left
+
+    Movie* classic7 = new Classics(10, "gdirector", "gtitle", 3, 3000, "bfirst", "dlast"); // left right left
+
+    Movie* classic8 = new Classics(10, "bdirector", "btitle", 3, 3000, "hfirst", "hlast"); // left right right sim2
 
     // don't add
     Movie* classic_nonexistent = new Classics(10, "classics1", "title1", 1, 1000, "nonexistant", "nonexistant");
@@ -45,10 +44,13 @@ int main() // has not been tested yet
     tree.insert(classic5);
     tree.insert(classic6);
     tree.insert(classic7);
+    tree.insert(classic8);
+    
+    // should have 8 total movies
 
     cout << "Inserts finished, beginning displays" << endl;
 
-    tree.displayPreorder();
+    tree.displayInorder(); // a, bb, g, bc, bh, d, f, e
 
     cout << endl << endl;
 
@@ -56,14 +58,14 @@ int main() // has not been tested yet
 
     cout << endl << endl;
 
-    cout << "classic1 similar titles: " << to_string(tree.findNumSimilarTitles(classic1)) << endl;
-    cout << "classic4 similar titles: " << to_string(tree.findNumSimilarTitles(classic4)) << endl;
-    cout << "classic7 similar titles: " << to_string(tree.findNumSimilarTitles(classic7)) << endl;
+    cout << "classic2 similar titles: " << to_string(tree.findNumSimilarTitles(classic2)) << endl; // 2 similar
+    cout << "classic3 similar titles: " << to_string(tree.findNumSimilarTitles(classic3)) << endl; // 2 similar
+    cout << "classic7 similar titles: " << to_string(tree.findNumSimilarTitles(classic7)) << endl; // 0 similar
 
     cout << endl << endl;
 
-    cout << "Tree " << (tree.hasObject(classic1) ? "has " : "doesn't have ") << "classic1" << endl;
-    cout << "Tree " << (tree.hasObject(classic_nonexistent) ? "has " : "doesn't have ") << "classic_nonexistent" << endl;
+    cout << "Tree " << (tree.hasObject(classic1) ? "has " : "doesn't have ") << "classic1" << endl; // has
+    cout << "Tree " << (tree.hasObject(classic_nonexistent) ? "has " : "doesn't have ") << "classic_nonexistent" << endl; // doesnt have
 
     return 0;
 }

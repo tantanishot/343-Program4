@@ -43,7 +43,7 @@ class BinTree
 
     void displaySideways() const; // displays the tree sidways
 
-    void displayPreorder() const;
+    void displayInorder() const;
 
   private:
     Node<T>* root; // Points to the root of the BST
@@ -53,7 +53,7 @@ class BinTree
     Node<T>* findParentNode(const T* objectPtr, Node<T>*& nodePtr) const; // finds the parent node to the given value by traversing in preorder
     int iterateAllSimilar(const T* objectPtr, Node<T>*& nodePtr, int*& count) const; // inorder traverses and counts all similar objects
     void printSidewaysTree(Node<T>*& nodePtr, int indentTracker) const; // recursively goes through right, root, left and prints
-    void preorderPrint(Node<T>*& nodePtr) const;
+    void inorderPrint(Node<T>*& nodePtr) const;
 };
 
 // ------------------------------------ constructor -------------------------------------------
@@ -88,9 +88,7 @@ bool BinTree<T>::isEmpty() const
 //                 tree
 // --------------------------------------------------------------------------------------------
 template <typename T>
-//objectPtr shouldnt be const since we will update the stock
-//while the rest of the methods should be fine with const,
-bool BinTree<T>::insert( T* objectPtr)
+bool BinTree<T>::insert(T* objectPtr)
 {
   bool insertSuccess = false;
   if (objectPtr == nullptr)
@@ -106,7 +104,7 @@ bool BinTree<T>::insert( T* objectPtr)
 
   Node<T>* nodePtr = root;
   Node<T>* parentNode = findParentNode(objectPtr, nodePtr);
-  if (parentNode == nullptr)
+  if (parentNode == nullptr || objectPtr == parentNode)
   {
     nodePtr = nullptr;
     parentNode = nullptr;
@@ -181,7 +179,7 @@ int BinTree<T>::findNumSimilarTitles(const T* objectPtr) const
   int i = 0; 
   int* countPtr = &i;
   int count = iterateAllSimilar(objectPtr, nodePtr, countPtr);
-  //i = nullptr;
+  countPtr = nullptr;
   nodePtr = nullptr;
   return count;
 }
@@ -211,15 +209,15 @@ void BinTree<T>::displaySideways() const
 }
 
 template <typename T>
-void BinTree<T>::displayPreorder() const
+void BinTree<T>::displayInorder() const
 {
   if (isEmpty())
   {
     cout << "Tree is empty." << endl;
   }
-  cout << "BinTree in preorder:" << endl;
+  cout << "BinTree in Inorder:" << endl;
   Node<T>* nodePtr = root;
-  preorderPrint(nodePtr);
+  inorderPrint(nodePtr);
 }
 
 
@@ -335,7 +333,7 @@ void BinTree<T>::printSidewaysTree(Node<T>*& nodePtr, int indentTracker) const
 }
 
 template <typename T>
-void BinTree<T>::preorderPrint(Node<T>*& nodePtr) const
+void BinTree<T>::inorderPrint(Node<T>*& nodePtr) const
 {
   if (nodePtr == nullptr)
   {
@@ -343,12 +341,12 @@ void BinTree<T>::preorderPrint(Node<T>*& nodePtr) const
   }
   if (nodePtr->left != nullptr)
   {
-    preorderPrint(nodePtr->left);
+    inorderPrint(nodePtr->left);
   }
   nodePtr->data->print();
   if (nodePtr->right != nullptr)
   {
-    preorderPrint(nodePtr->right);
+    inorderPrint(nodePtr->right);
   }
 }
 

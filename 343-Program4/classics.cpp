@@ -54,7 +54,6 @@ bool Classics::adjustStock(const bool increment)
 
 bool Classics::isSimilar(const Classics* classicsPtr) const
 {
-
     //perform null check
     if (classicsPtr == nullptr)
     {
