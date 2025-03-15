@@ -20,9 +20,9 @@ class Comedy : public Movie
 
         string formatSortCriteria() const override;
 
-        bool operator<(const Movie* moviePtr) const override;
-        bool operator>(const Movie* moviePtr) const override;
-        bool operator==(const Movie* moviePtr) const override;
+        bool operator<(const Movie& moviePtr) const override;
+        bool operator>(const Movie& moviePtr) const override;
+        bool operator==(const Movie& moviePtr) const override;
 
         void print() const override;
 };

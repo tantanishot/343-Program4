@@ -18,7 +18,7 @@ bool Return<T>::processMovie(Movie* moviePtr, Customer* customerPtr)
     // assuming movie and customer exists in hashtables and trees
     if (moviePtr->getCode().compare("C") == 0)
     {
-        const Classics* classicsPtr = dynamic_cast<const Classics*>(moviePtr);
+       Classics* classicsPtr = dynamic_cast<Classics*>(moviePtr);
         if (customerPtr->hasTransaction(classicsPtr))
         {
             classicsPtr->adjustStock(true);
@@ -34,7 +34,7 @@ bool Return<T>::processMovie(Movie* moviePtr, Customer* customerPtr)
     }
     else if (moviePtr->getCode().compare("F") == 0)
     {
-        const Comedy* comedyPtr = dynamic_cast<const Comedy*>(moviePtr);
+        Comedy* comedyPtr = dynamic_cast< Comedy*>(moviePtr);
         if (customerPtr->hasTransaction(comedyPtr))
         {
             comedyPtr->adjustStock(true);
@@ -50,7 +50,7 @@ bool Return<T>::processMovie(Movie* moviePtr, Customer* customerPtr)
     }
     else if (moviePtr->getCode().compare("D") == 0)
     {
-        const Drama* dramaPtr = dynamic_cast<const Drama*>(moviePtr);
+        Drama* dramaPtr = dynamic_cast<Drama*>(moviePtr);
         if (customerPtr->hasTransaction(dramaPtr))
         {
             dramaPtr->adjustStock(true);

@@ -22,9 +22,9 @@ class Classics : public Movie
 
         string formatSortCriteria() const override;
 
-        bool operator<(const Movie* moviePtr) const override;
-        bool operator>(const Movie* moviePtr) const override;
-        bool operator==(const Movie* moviePtr) const override;
+        bool operator<(const Movie& movie) const override;
+        bool operator>(const Movie& movie) const override;
+        bool operator==(const Movie& movie) const override;
 
         void print() const override;
 

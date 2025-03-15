@@ -12,32 +12,31 @@ string Drama::formatSortCriteria() const {
     return director + ", " + title;
 }
 
-bool Drama::operator<(const Movie* moviePtr) const {
-    const Drama* dramaPtr = dynamic_cast<const Drama*>(moviePtr);
-    if (dramaPtr == nullptr) return false;
+bool Drama::operator<(const Movie& movie) const {
+    const Drama& drama = dynamic_cast<const Drama&>(movie); // Reference cast
 
-    if (director.compare(dramaPtr->director) != 0)
-        return director.compare(dramaPtr->director) < 0;
+    if (director.compare(drama.director) != 0)
+        return director.compare(drama.director) < 0;
 
-    return title.compare(dramaPtr->title) < 0;
+    return title.compare(drama.title) < 0;
 }
 
-bool Drama::operator>(const Movie* moviePtr) const {
-    const Drama* dramaPtr = dynamic_cast<const Drama*>(moviePtr);
-    if (dramaPtr == nullptr) return false;
 
-    if (director.compare(dramaPtr->director) != 0)
-        return director.compare(dramaPtr->director) > 0;
+bool Drama::operator>(const Movie& movie) const {
+    const Drama& drama = dynamic_cast<const Drama&>(movie); // Reference cast
 
-    return title.compare(dramaPtr->title) > 0;
+    if (director.compare(drama.director) != 0)
+        return director.compare(drama.director) > 0;
+
+    return title.compare(drama.title) > 0;
 }
 
-bool Drama::operator==(const Movie* moviePtr) const {
-    const Drama* dramaPtr = dynamic_cast<const Drama*>(moviePtr);
-    if (dramaPtr == nullptr) return false;
 
-    return (director.compare(dramaPtr->director) == 0 &&
-            title.compare(dramaPtr->title) == 0);
+bool Drama::operator==(const Movie& movie) const {
+    const Drama& drama = dynamic_cast<const Drama&>(movie); // Reference cast
+
+    return (director.compare(drama.director) == 0 &&
+            title.compare(drama.title) == 0);
 }
 
 string Drama::getItemType() const

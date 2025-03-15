@@ -18,7 +18,7 @@ bool Borrow<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T
     // assumes movie and customer already exists in respective hashtable and tree
     if (moviePtr->getCode().compare("C") == 0)
     {
-        const Classics* classicsPtr = dynamic_cast<const Classics*>(moviePtr);
+       Classics* classicsPtr = dynamic_cast< Classics*>(moviePtr);
         if (classicsPtr->getStock() == 0) // recommend other similar titles
         {
             int numSimilarTitles = tree->findNumSimilarTitles(classicsPtr);
@@ -69,7 +69,7 @@ bool Borrow<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T
     }
     else if (moviePtr->getCode().compare("F") == 0)
     {
-        const Comedy* comedyPtr = dynamic_cast<const Comedy*>(moviePtr);
+        Comedy* comedyPtr = dynamic_cast<Comedy*>(moviePtr);
         bool stockAdjusted = comedyPtr->adjustStock(false);
         if (stockAdjusted)
         {
@@ -84,7 +84,7 @@ bool Borrow<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T
     }
     else if (moviePtr->getCode().compare("D") == 0)
     {
-        const Drama* dramaPtr = dynamic_cast<const Drama*>(moviePtr);
+        Drama* dramaPtr = dynamic_cast<Drama*>(moviePtr);
         bool stockAdjusted = dramaPtr->adjustStock(false);
         if (stockAdjusted)
         {

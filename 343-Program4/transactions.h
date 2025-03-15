@@ -23,6 +23,7 @@ template <typename T>
 class Transactions
 {
     public:
+        //
         virtual bool processMovie() = 0; // true if movie was successfully added, false if not
 };
 

@@ -68,49 +68,46 @@ bool Classics::isSimilar(const Classics* classicsPtr) const
 string Classics::formatSortCriteria() const {
     return to_string(releaseMonth) + " " + to_string(releaseYear) + " " + MAFirstName + " " + MALastName;
 }
+bool Classics::operator<(const Movie& movie) const {
+    const Classics& classics = dynamic_cast<const Classics&>(movie); // Now a reference
 
-bool Classics::operator<(const Movie* moviePtr) const {
-    const Classics* classicsPtr = dynamic_cast<const Classics*>(moviePtr);
-    if (classicsPtr == nullptr) return false;
+    if (releaseYear != classics.releaseYear) 
+        return releaseYear < classics.releaseYear;
 
-    if (releaseYear != classicsPtr->releaseYear) 
-        return releaseYear < classicsPtr->releaseYear;
+    if (releaseMonth != classics.releaseMonth)
+        return releaseMonth < classics.releaseMonth;
 
-    if (releaseMonth != classicsPtr->releaseMonth)
-        return releaseMonth < classicsPtr->releaseMonth;
+    if (MAFirstName.compare(classics.MAFirstName) != 0)
+        return MAFirstName.compare(classics.MAFirstName) < 0;
 
-    if (MAFirstName.compare(classicsPtr->MAFirstName) != 0)
-        return MAFirstName.compare(classicsPtr->MAFirstName) < 0;
-
-    return MALastName.compare(classicsPtr->MALastName) < 0;
+    return MALastName.compare(classics.MALastName) < 0;
 }
 
-bool Classics::operator>(const Movie* moviePtr) const {
-    const Classics* classicsPtr = dynamic_cast<const Classics*>(moviePtr);
-    if (classicsPtr == nullptr) return false;
+bool Classics::operator>(const Movie& movie) const {
+    const Classics& classics = dynamic_cast<const Classics&>(movie); // Now a reference
 
-    if (releaseYear != classicsPtr->releaseYear) 
-        return releaseYear > classicsPtr->releaseYear;
+    if (releaseYear != classics.releaseYear) 
+        return releaseYear > classics.releaseYear;
 
-    if (releaseMonth != classicsPtr->releaseMonth)
-        return releaseMonth > classicsPtr->releaseMonth;
+    if (releaseMonth != classics.releaseMonth)
+        return releaseMonth > classics.releaseMonth;
 
-    if (MAFirstName.compare(classicsPtr->MAFirstName) != 0)
-        return MAFirstName.compare(classicsPtr->MAFirstName) > 0;
+    if (MAFirstName.compare(classics.MAFirstName) != 0)
+        return MAFirstName.compare(classics.MAFirstName) > 0;
 
-    return MALastName.compare(classicsPtr->MALastName) > 0;
+    return MALastName.compare(classics.MALastName) > 0;
 }
 
-bool Classics::operator==(const Movie* moviePtr) const {
-    const Classics* classicsPtr = dynamic_cast<const Classics*>(moviePtr);
-    if (classicsPtr == nullptr) return false;
 
-    return (releaseMonth == classicsPtr->releaseMonth &&
-            releaseYear == classicsPtr->releaseYear &&
-            MAFirstName.compare(classicsPtr->MAFirstName) == 0 &&
-            MALastName.compare(classicsPtr->MALastName) == 0);
+bool Classics::operator==(const Movie& movie) const {
+    const Classics& classics = dynamic_cast<const Classics&>(movie); // Now a reference
+
+    return (releaseMonth == classics.releaseMonth &&
+            releaseYear == classics.releaseYear &&
+            MAFirstName.compare(classics.MAFirstName) == 0 &&
+            MALastName.compare(classics.MALastName) == 0);
+            
 }
-
 void Classics::print() const
 {
     cout << itemType << ", " << code << ", " << to_string(stock) << ", " << director << ", " << title << ", " <<

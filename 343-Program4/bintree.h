@@ -90,128 +90,56 @@ bool BinTree<T>::isEmpty() const
 template <typename T>
 bool BinTree<T>::insert(T* objectPtr)
 {
-  bool insertSuccess = false;
-  if (objectPtr == nullptr)
-  {
-    return false;
-  }
-
-  if (isEmpty()) // insert when tree is empty;
-  {
-    root->data = objectPtr;
-    insertSuccess = true;
-  }
-
-  Node<T>* nodePtr = root;
-  Node<T>* parentNode = findParentNode(objectPtr, nodePtr);
-  //we need to check the dupe in the data not the templated node itself
-  if (parentNode == nullptr)
-  {
-    nodePtr = nullptr;
-    parentNode = nullptr;
-    return false;
-  }
-  if (!insertSuccess)
-  {
-    // cast parentNode and nodePtr to same type
-
-    if (objectPtr->getCode().compare("C")) // there's some bad coding ideas going on here since it's repeating code over and over, if you can find a fix to, whatever works
+    //kinda reverted backk to the old version since yours got a littel confusing
+    if (objectPtr == nullptr)
     {
-      const Classics* castObjectPtr = dynamic_cast<const Classics*>(objectPtr);
-      const Classics* castParentPtr = dynamic_cast<const Classics*>(parentNode->data);
-      if (objectPtr < castParentPtr) // add in to left branch
-      {
-        Node<T>* addNode = new Node<T>();
-        addNode->data = objectPtr;
-        addNode->left = nullptr;
-        addNode->right = nullptr;
-  
-        parentNode->left = addNode;
-        insertSuccess = true;
-      }
-      else if (castObjectPtr > castParentPtr) // add in to right branch
-      {
-        Node<T>* addNode = new Node<T>();
-        addNode->data = objectPtr;
-        addNode->left = nullptr;
-        addNode->right = nullptr;
-  
-        parentNode->right = addNode;
-        insertSuccess = true;
-      }
-      else // value already exsists in tree
-      {
-        insertSuccess = false;
-      }
+      return false;
     }
-    else if (objectPtr->getCode().compare("F"))
-    {
-      const Comedy* castObjectPtr = dynamic_cast<const Comedy*>(objectPtr);
-      const Comedy* castParentPtr = dynamic_cast<const Comedy*>(parentNode->data);
-      if (castObjectPtr < castParentPtr) // add in to left branch
-      {
-        Node<T>* addNode = new Node<T>();
-        addNode->data = objectPtr;
-        addNode->left = nullptr;
-        addNode->right = nullptr;
-  
-        parentNode->left = addNode;
-        insertSuccess = true;
-      }
-      else if (castObjectPtr > castParentPtr) // add in to right branch
-      {
-        Node<T>* addNode = new Node<T>();
-        addNode->data = objectPtr;
-        addNode->left = nullptr;
-        addNode->right = nullptr;
-  
-        parentNode->right = addNode;
-        insertSuccess = true;
-      }
-      else // value already exsists in tree
-      {
-        insertSuccess = false;
-      }
-    }
-    else if (objectPtr->getCode().compare("D"))
-    {
-      const Drama* castObjectPtr = dynamic_cast<const Drama*>(objectPtr);
-      const Drama* castParentPtr = dynamic_cast<const Drama*>(parentNode->data);
-      if (castObjectPtr < castParentPtr) // add in to left branch
-      {
-        Node<T>* addNode = new Node<T>();
-        addNode->data = objectPtr;
-        addNode->left = nullptr;
-        addNode->right = nullptr;
-  
-        parentNode->left = addNode;
-        insertSuccess = true;
-      }
-      else if (castObjectPtr > castParentPtr) // add in to right branch
-      {
-        Node<T>* addNode = new Node<T>();
-        addNode->data = objectPtr;
-        addNode->left = nullptr;
-        addNode->right = nullptr;
-  
-        parentNode->right = addNode;
-        insertSuccess = true;
-      }
-      else // value already exsists in tree
-      {
-        insertSuccess = false;
-      }
-    }
-    else
-    {
-      insertSuccess = false;
-    }
-  }
 
-  nodePtr = nullptr;
-  parentNode = nullptr;
-  return insertSuccess;
-}
+    Node<T>* newNode = new Node<T>();
+    newNode->data = objectPtr;
+    newNode->left = nullptr;
+    newNode->right = nullptr;
+
+    if (isEmpty())
+    {
+      root = newNode;
+      return true;
+    }
+
+    Node<T>* current = root;
+    Node<T>* parent = nullptr;
+
+
+    //tried dereferencing approach which is better
+    //since its bad practice to compare with pointers
+    while (current != nullptr)
+    {
+        parent = current;
+        if (*objectPtr < *(current->data))
+        {
+          current = current->left;
+        }
+        else if (*objectPtr > *(current->data))
+        {
+          current = current->right;
+        }
+        else
+        {
+          delete newNode;
+          return false; // Duplicate found
+        }
+    }
+      if (*objectPtr < *(parent->data))
+      {
+        parent->left = newNode;
+      }
+      else
+      {
+        parent->right = newNode;
+      }
+    return true;
+  }   
 
 template <typename T>
 bool BinTree<T>::hasObject(const T* objectPtr) const

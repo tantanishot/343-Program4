@@ -7,6 +7,12 @@
 #include "hash_table.h"
 #include "bintree.h"
 #include "transactions.h"
+
+#include "borrow.h"
+#include "return.h"
+#include "inventory.h"
+#include "history.h"
+
 //Included types movie and customer
 #include "classics.h"
 #include "comedy.h"
@@ -201,7 +207,7 @@ void ProcessData<T>::processCommands()
 
             if (transactionType == "B") { 
                 if (foundMovie->getStock() > 0) {
-                    Borrow<Movie> borrowTransaction;  // ✅ Create Borrow object
+                    Borrow<Movie> borrowTransaction;  // Create Borrow object
                     bool success = borrowTransaction.processMovie(foundMovie, foundCustomer, storedMovies[genreIndex], movieTree[genreIndex]);
             
                     if (success) {
@@ -218,9 +224,8 @@ void ProcessData<T>::processCommands()
             }
             
             else if (transactionType == "R") { 
-                if (foundMovie->getStock() > 0) {
-                    Borrow<Movie> borrowTransaction;  // ✅ Create Borrow object
-                    bool success = borrowTransaction.processMovie(foundMovie, foundCustomer, storedMovies[genreIndex], movieTree[genreIndex]);
+                    Return<Movie> returnTransaction;  // Create Borrow object
+                    bool success = returnTransaction.processMovie(foundMovie, foundCustomer);
             
                     if (success) {
                         cout << "[SUCCESS] Returned: " << foundMovie->formatSortCriteria() 
@@ -229,13 +234,7 @@ void ProcessData<T>::processCommands()
                         cout << "[ERROR] Failed to return: " << foundMovie->formatSortCriteria() 
                              << " at line " << currentLine << "\n";
                     }
-                } else {
-                    cout << "[ERROR] Movie out of stock: " << foundMovie->formatSortCriteria() 
-                         << " at line " << currentLine << "\n";
-                }
             }
-
-
             /*
             //im not sure how you wanted to approach this... 
             //regarding time im just going to try to finish the validations

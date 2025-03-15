@@ -13,32 +13,30 @@ string Comedy::formatSortCriteria() const
     return title + ", " + to_string(releaseYear);
 }
 
-bool Comedy::operator<(const Movie* moviePtr) const {
-    const Comedy* comedyPtr = dynamic_cast<const Comedy*>(moviePtr);
-    if (comedyPtr == nullptr) return false;
+bool Comedy::operator<(const Movie& movie) const {
+    const Comedy& comedy = dynamic_cast<const Comedy&>(movie); // Reference cast
 
-    if (title.compare(comedyPtr->title) != 0)
-        return title.compare(comedyPtr->title) < 0;
+    if (title.compare(comedy.title) != 0)
+        return title.compare(comedy.title) < 0;
 
-    return releaseYear < comedyPtr->releaseYear;
+    return releaseYear < comedy.releaseYear;
 }
 
-bool Comedy::operator>(const Movie* moviePtr) const {
-    const Comedy* comedyPtr = dynamic_cast<const Comedy*>(moviePtr);
-    if (comedyPtr == nullptr) return false;
+bool Comedy::operator>(const Movie& movie) const {
+    const Comedy& comedy = dynamic_cast<const Comedy&>(movie); // Reference cast
 
-    if (title.compare(comedyPtr->title) != 0)
-        return title.compare(comedyPtr->title) > 0;
+    if (title.compare(comedy.title) != 0)
+        return title.compare(comedy.title) > 0;
 
-    return releaseYear > comedyPtr->releaseYear;
+    return releaseYear > comedy.releaseYear;
 }
 
-bool Comedy::operator==(const Movie* moviePtr) const {
-    const Comedy* comedyPtr = dynamic_cast<const Comedy*>(moviePtr);
-    if (comedyPtr == nullptr) return false;
 
-    return (title.compare(comedyPtr->title) == 0 &&
-            releaseYear == comedyPtr->releaseYear);
+bool Comedy::operator==(const Movie& movie) const {
+    const Comedy& comedy = dynamic_cast<const Comedy&>(movie); // Reference cast
+
+    return (title.compare(comedy.title) == 0 &&
+            releaseYear == comedy.releaseYear);
 }
 
 string Comedy::getItemType() const
