@@ -105,7 +105,7 @@ bool BinTree<T>::insert(T* objectPtr)
   Node<T>* nodePtr = root;
   Node<T>* parentNode = findParentNode(objectPtr, nodePtr);
   //we need to check the dupe in the data not the templated node itself
-  if (parentNode == nullptr || objectPtr == parentNode->data)
+  if (parentNode == nullptr)
   {
     nodePtr = nullptr;
     parentNode = nullptr;
@@ -113,27 +113,96 @@ bool BinTree<T>::insert(T* objectPtr)
   }
   if (!insertSuccess)
   {
-    if (objectPtr < parentNode->data) // add in to left branch
-    {
-      Node<T>* addNode = new Node<T>();
-      addNode->data = objectPtr;
-      addNode->left = nullptr;
-      addNode->right = nullptr;
+    // cast parentNode and nodePtr to same type
 
-      parentNode->left = addNode;
-      insertSuccess = true;
-    }
-    else if (objectPtr > parentNode->data) // add in to right branch
+    if (objectPtr->getCode().compare("C")) // there's some bad coding ideas going on here since it's repeating code over and over, if you can find a fix to, whatever works
     {
-      Node<T>* addNode = new Node<T>();
-      addNode->data = objectPtr;
-      addNode->left = nullptr;
-      addNode->right = nullptr;
-
-      parentNode->right = addNode;
-      insertSuccess = true;
+      const Classics* castObjectPtr = dynamic_cast<const Classics*>(objectPtr);
+      const Classics* castParentPtr = dynamic_cast<const Classics*>(parentNode->data);
+      if (objectPtr < castParentPtr) // add in to left branch
+      {
+        Node<T>* addNode = new Node<T>();
+        addNode->data = objectPtr;
+        addNode->left = nullptr;
+        addNode->right = nullptr;
+  
+        parentNode->left = addNode;
+        insertSuccess = true;
+      }
+      else if (castObjectPtr > castParentPtr) // add in to right branch
+      {
+        Node<T>* addNode = new Node<T>();
+        addNode->data = objectPtr;
+        addNode->left = nullptr;
+        addNode->right = nullptr;
+  
+        parentNode->right = addNode;
+        insertSuccess = true;
+      }
+      else // value already exsists in tree
+      {
+        insertSuccess = false;
+      }
     }
-    else // value already exsists in tree
+    else if (objectPtr->getCode().compare("F"))
+    {
+      const Comedy* castObjectPtr = dynamic_cast<const Comedy*>(objectPtr);
+      const Comedy* castParentPtr = dynamic_cast<const Comedy*>(parentNode->data);
+      if (castObjectPtr < castParentPtr) // add in to left branch
+      {
+        Node<T>* addNode = new Node<T>();
+        addNode->data = objectPtr;
+        addNode->left = nullptr;
+        addNode->right = nullptr;
+  
+        parentNode->left = addNode;
+        insertSuccess = true;
+      }
+      else if (castObjectPtr > castParentPtr) // add in to right branch
+      {
+        Node<T>* addNode = new Node<T>();
+        addNode->data = objectPtr;
+        addNode->left = nullptr;
+        addNode->right = nullptr;
+  
+        parentNode->right = addNode;
+        insertSuccess = true;
+      }
+      else // value already exsists in tree
+      {
+        insertSuccess = false;
+      }
+    }
+    else if (objectPtr->getCode().compare("D"))
+    {
+      const Drama* castObjectPtr = dynamic_cast<const Drama*>(objectPtr);
+      const Drama* castParentPtr = dynamic_cast<const Drama*>(parentNode->data);
+      if (castObjectPtr < castParentPtr) // add in to left branch
+      {
+        Node<T>* addNode = new Node<T>();
+        addNode->data = objectPtr;
+        addNode->left = nullptr;
+        addNode->right = nullptr;
+  
+        parentNode->left = addNode;
+        insertSuccess = true;
+      }
+      else if (castObjectPtr > castParentPtr) // add in to right branch
+      {
+        Node<T>* addNode = new Node<T>();
+        addNode->data = objectPtr;
+        addNode->left = nullptr;
+        addNode->right = nullptr;
+  
+        parentNode->right = addNode;
+        insertSuccess = true;
+      }
+      else // value already exsists in tree
+      {
+        insertSuccess = false;
+      }
+    }
+    else
     {
       insertSuccess = false;
     }
