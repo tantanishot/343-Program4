@@ -25,6 +25,8 @@ class HashTable
 
         T* atIndex(const int index) const;
 
+        int size() const;
+
         void display() const; // Print all stored movies 
 
     private:
@@ -108,6 +110,12 @@ T* HashTable<T>::atIndex(const int index) const
         return nullptr;
     }
     return table[index];
+}
+
+template <typename T>
+int HashTable<T>::size() const
+{
+    return TABLE_SIZE;
 }
 
 // h(x1) = (x1 % 53)

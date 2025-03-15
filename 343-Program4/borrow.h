@@ -32,7 +32,7 @@ bool Borrow<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T
                 {
                     if (hashtable->atIndex(index)->getStock() != 0)
                     {
-                        // recommend title
+                        // recommend title?
 
                         // decreaseStock
                         hashtable->atIndex(index)->adjustStock(false);

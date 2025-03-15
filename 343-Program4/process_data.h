@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include "hash_table.h"
+#include "bintree.h"
 #include "transactions.h"
 //Included types movie and customer
 #include "classics.h"
@@ -33,7 +34,7 @@ class ProcessData
         HashTable<T>* storedMovies[3];
         HashTable<T>* storedCustomers;
 
-
+        BinTree<T>* movieTree[3];
 };
 
 //Need to remove this since it doesnt work as its called multiple times if it does
@@ -52,6 +53,7 @@ ProcessData<T>::ProcessData()
     for (int i = 0; i < NUM_GENRES; i++)
     {
         storedMovies[i] = new HashTable<T>();
+        movieTree[i] = new HashTable<T>();
     }
 }
 
@@ -63,6 +65,7 @@ ProcessData<T>::~ProcessData()
     for (int i = 0; i < NUM_GENRES; i++)
     {
         delete storedMovies[i];
+        delete movieTree[i];
     }
 }
 
@@ -91,8 +94,8 @@ void ProcessData<T>::processCommands()
         cout << "Command file could not be opened." << endl;
         return;
     }
-    /*
-      // process command file line by line
+
+    // process command file line by line
     int currentLine = 0;    // tracking the current line being read in file
     while (!commandFile.eof())
     {
@@ -110,10 +113,18 @@ void ProcessData<T>::processCommands()
             int customerID = stoi(line);
 
             // check if customerID exists in hashtable
+            int steps = 0;
+            bool customerFound = false;
+            while (!customerFound)
+            {
+                
+            }
 
-            // check item type
+            // check for valid item type
 
-            // check last arguments to see if movie exists
+            // check for valid movie type
+
+            // check last arguments to see if movie exists in corresponding hashtable
 
             // process movie if all valid arguments
             b.processMovie();
@@ -135,11 +146,7 @@ void ProcessData<T>::processCommands()
             cout << "Invalid transaction attemped at line " << currentLine << "." << endl;
             cout << "Skipping line " << currentLine << "." << endl;
         }
-    }
-    
-    
-    */
-  
+    }  
 }
 
 //pass in a new movie object
@@ -171,6 +178,7 @@ void ProcessData<T>::initializeMovieData(ifstream &stream)
 
             Movie* newMovie = new Classics(stock, director, title, month, year, firstActor, lastActor);
             storedMovies[2]->insertString(newMovie->formatSortCriteria(), newMovie);
+            movieTree[2]->insert(newMovie);
         }
         else if (genre == "F")  // If it's a Comedy movie
         {
@@ -179,6 +187,7 @@ void ProcessData<T>::initializeMovieData(ifstream &stream)
 
             Movie* newMovie = new Comedy(stock, director, title, year);
             storedMovies[0]->insertString(newMovie->formatSortCriteria(), newMovie);
+            movieTree[0]->insert(newMovie);
         }
         else if (genre == "D")  // If it's a Drama movie
         {
@@ -187,6 +196,7 @@ void ProcessData<T>::initializeMovieData(ifstream &stream)
 
             Movie* newMovie = new Drama(stock, director, title, year);
             storedMovies[1]->insertString(newMovie->formatSortCriteria(), newMovie);
+            movieTree[1]->insert(newMovie);
         }
         else
         {
