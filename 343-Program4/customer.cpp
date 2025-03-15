@@ -25,6 +25,18 @@ void Customer::addTransaction(pastTransactions newTransaction)
     history.insert(history.begin(), newTransaction);
 }
 
+bool Customer::hasTransaction(Movie* moviePtr) const
+{
+    for (int i = 0; i < history.size(); i++)
+    {
+        if (history[i].status.compare("Borrowed") == 0 && history[i].moviePtr == moviePtr)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 //print the transactions 
 void Customer::displayHistory() const
 {

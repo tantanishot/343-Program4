@@ -39,7 +39,7 @@ int Classics::getStock() const {
 
 bool Classics::adjustStock(const bool increment)
 {
-    if (increment)
+    if (increment && stock < stockCap)
     {
         stock++;
         return true;

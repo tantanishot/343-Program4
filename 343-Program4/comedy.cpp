@@ -70,7 +70,7 @@ int Comedy::getStock() const {
 
 bool Comedy::adjustStock(const bool increment)
 {
-    if (increment)
+    if (increment && stock < stockCap)
     {
         stock++;
         return true;

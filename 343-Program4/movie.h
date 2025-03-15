@@ -7,7 +7,7 @@ class Movie : public DVD
 {
     public:
         Movie(int movStock, string movDirector, string movTitle, int movRelease) 
-        : stock(movStock), director(movDirector), title(movTitle), releaseYear(movRelease) {}
+        : stock(movStock), stockCap(movStock), director(movDirector), title(movTitle), releaseYear(movRelease) {}
 
         virtual string getCode() const = 0;
         virtual int getStock() const = 0;
@@ -25,6 +25,7 @@ class Movie : public DVD
     protected:
         string code;
         int stock;
+        int stockCap;
         string director;
         string title;
         int releaseYear;

@@ -18,6 +18,7 @@ class Customer
         string getName() const;
 
         void addTransaction(pastTransactions newTransaction);
+        bool hasTransaction(Movie* moviePtr) const;
         void displayHistory() const;
 
         bool operator<(const Customer* customerPtr) const;
