@@ -3,10 +3,13 @@
 
 #include <string>
 #include <vector>
+#include "hash_table.h"
 #include "customer.h"
 #include "movie.h"
 #include "classics.h"
 #include "iomanip"
+
+using std::right;
 
 using namespace std;
 
@@ -44,7 +47,7 @@ class BinTree
 
     void displaySideways() const; // displays the tree sidways
 
-    void displayInorder() const;
+    void displayInorder(HashTable<T>* table);
 
   private:
     Node<T>* root; // Points to the root of the BST
@@ -54,7 +57,7 @@ class BinTree
     Node<T>* findParentNode(const T* objectPtr, Node<T>*& nodePtr) const; // finds the parent node to the given value by traversing in preorder
     int iterateAllSimilar(T* objectPtr, Node<T>*& nodePtr, int*& count) const; // inorder traverses and counts all similar objects
     void printSidewaysTree(Node<T>*& nodePtr, int indentTracker) const; // recursively goes through right, root, left and prints
-    void inorderPrint(Node<T>*& nodePtr) const;
+    void inorderPrint(Node<T>*& nodePtr, vector<Movie*>*& seenMovies, HashTable<T>* table);
 };
 
 // ------------------------------------ constructor -------------------------------------------
@@ -208,7 +211,7 @@ void BinTree<T>::displaySideways() const
 }
 
 template <typename T>
-void BinTree<T>::displayInorder() const
+void BinTree<T>::displayInorder(HashTable<T>* table)
 {
   if (isEmpty())
   {
@@ -219,24 +222,24 @@ void BinTree<T>::displayInorder() const
   if (nodePtr->data->getCode().compare("C") == 0)
   {
     cout << "Classics:" << endl;
-    cout << "Genre" << setw(3) << "Media" << setw(3) << "Title" << setw(30) << "Director" << setw(14) << "Month" <<
-            setw(5) << "Year" << setw(4) << "Stock" << endl;
+    cout << setw(8) << left << "Genre" << setw(8) << left << "Media" << setw(35) << left << "Title" << setw(22) << left <<
+            "Director" << setw(10) << left << "Month" << setw(8) << left << "Year" << "Stock" << endl;
   }
   else if (nodePtr->data->getCode().compare("D") == 0)
   {
     cout << "Dramas:" << endl;
-    cout << "Genre" << setw(3) << "Media" << setw(3) << "Title" << setw(30) << "Director" << setw(14) << "Year" <<
-            setw(17) << "Stock" << endl;
+    cout << setw(8) << left << "Genre" << setw(8) << left << "Media" << setw(35) << left << "Title" << setw(22) << left <<
+            "Director" << setw(18) << left << "Year" << "Stock" << endl;
   }
   else if (nodePtr->data->getCode().compare("F") == 0)
   {
     cout << "Comedy:" << endl;
-    cout << "Genre" << setw(3) << "Media" << setw(3) << "Title" << setw(30) << "Director" << setw(14) << "Year" <<
-            setw(17) << "Stock" << endl;
+    cout << setw(8) << left << "Genre" << setw(8) << left << "Media" << setw(35) << left << "Title" << setw(22) << left <<
+            "Director" << setw(18) << left << "Year" << "Stock" << endl;
   }
-  inorderPrint(nodePtr);
+  vector<Movie*>* seenMovies = new vector<Movie*>();
+  inorderPrint(nodePtr, seenMovies, table);
   cout << "----------------------------------------------------------------------------------------------" << endl;
-
 }
 
 
@@ -352,7 +355,7 @@ void BinTree<T>::printSidewaysTree(Node<T>*& nodePtr, int indentTracker) const
 }
 
 template <typename T>
-void BinTree<T>::inorderPrint(Node<T>*& nodePtr) const
+void BinTree<T>::inorderPrint(Node<T>*& nodePtr, vector<Movie*>*& seenMovies, HashTable<T>* table)
 {
   if (nodePtr == nullptr)
   {
@@ -360,12 +363,68 @@ void BinTree<T>::inorderPrint(Node<T>*& nodePtr) const
   }
   if (nodePtr->left != nullptr)
   {
-    inorderPrint(nodePtr->left);
+    inorderPrint(nodePtr->left, seenMovies, table);
   }
-  nodePtr->data->print();
+
+  if (nodePtr->data->getCode().compare("C") == 0)
+  {
+    int numSimilar = findNumSimilarTitles(nodePtr->data);
+    if (numSimilar > 0)
+    {
+      // if not in seenMovies:
+        // iterate through hash until all similar titles found
+          // print all of their stocks and main actor names
+        // add any to vector seenMovies
+      bool seen = false;
+      Classics* newNodePtr = dynamic_cast <Classics*>(nodePtr->data);
+      cout << "test 1" << endl;////////////////////////////////////////////////////////////////////
+      if (!seenMovies->empty())
+      {
+        for (int i = 0; i < seenMovies->size(); i++)
+        {
+          Classics* cPtr = dynamic_cast <Classics*>(seenMovies->at(i));
+          if (cPtr->isSimilar(newNodePtr))
+          {
+            seen = true;
+            i = seenMovies->size() + 1;
+          }
+        }
+      }
+      cout << "test 2" << endl;
+      if (!seen)
+      {
+        newNodePtr->print();
+        cout << setw(75) << newNodePtr->getMA() << "---------------" << setw(3) << to_string(newNodePtr->getStock()) << endl;
+        int count = 0;
+        while (count < numSimilar)
+        {
+          Classics* classicsPtr = dynamic_cast<Classics*>(table->atIndex(table->getStringIndex(newNodePtr->formatSortCriteria(), count)));
+          if (classicsPtr != nullptr && classicsPtr->isSimilar(newNodePtr))
+          {
+            cout << setw(75) << classicsPtr->getMA() << "---------------" << setw(3) << right << to_string(classicsPtr->getStock()) << endl;
+            count++;
+          }
+        }
+        seenMovies->push_back(newNodePtr);
+      }
+      else
+      {
+        newNodePtr->print();
+      }
+    }
+    else
+    {
+      nodePtr->data->print();
+    }
+  }
+  else
+  {
+    nodePtr->data->print();
+  }
+
   if (nodePtr->right != nullptr)
   {
-    inorderPrint(nodePtr->right);
+    inorderPrint(nodePtr->right, seenMovies, table);
   }
 }
 

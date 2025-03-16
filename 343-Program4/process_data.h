@@ -20,6 +20,7 @@
 #include "customer.h"
 
 using namespace std;
+using std::left;
 
 const int NUM_GENRES = 3;
 
@@ -212,13 +213,10 @@ void ProcessData<T>::processCommands()
         else if (transactionType == "I")    // inventory
         {
             //print all types of movies  
-            cout << "[READ] Inventory command at line " << currentLine << "\n";
-            cout << "Displaying Inventory:\n";
-
             Inventory<Movie> inventoryTransaction;
             for (int i = 0; i < NUM_GENRES; i++)
             {
-                inventoryTransaction.processMovie(nullptr, nullptr, nullptr, movieTree[i]);
+                inventoryTransaction.processMovie(nullptr, nullptr, storedMovies[i], movieTree[i]);
             }
         }
         else if (transactionType == "H")    // history
@@ -265,18 +263,9 @@ void ProcessData<T>::initializeMovieData(ifstream &stream)
         getline(ss, director, ',');
         getline(ss, title, ',');
 
-
-        cout << "[DEBUG] Processing line: " << line << endl;
-        cout << "[DEBUG] Parsed values - Genre: " << genre 
-             << ", Stock: " << stock 
-             << ", Director: " << director 
-             << ", Title: " << title << endl;
-
         if (genre == "C")  // If it's a Classics movie
         {
             ss >> firstActor >> lastActor >> month >> year;
-            cout << "[DEBUG] Extracted Classics - Actor: " << firstActor << " " << lastActor
-                 << ", Month: " << month << ", Year: " << year << endl;
 
             Movie* newMovie = new Classics(stock, director, title, month, year, firstActor, lastActor);
             storedMovies[2]->insertString(newMovie->formatSortCriteria(), newMovie);
@@ -285,7 +274,6 @@ void ProcessData<T>::initializeMovieData(ifstream &stream)
         else if (genre == "F")  // If it's a Comedy movie
         {
             ss >> year;
-            cout << "[DEBUG] Extracted Comedy - Year: " << year << endl;
 
             Movie* newMovie = new Comedy(stock, director, title, year);
             storedMovies[0]->insertString(newMovie->formatSortCriteria(), newMovie);
@@ -294,7 +282,6 @@ void ProcessData<T>::initializeMovieData(ifstream &stream)
         else if (genre == "D")  // If it's a Drama movie
         {
             ss >> year;
-            cout << "[DEBUG] Extracted Drama - Year: " << year << endl;
 
             Movie* newMovie = new Drama(stock, director, title, year);
             storedMovies[1]->insertString(newMovie->formatSortCriteria(), newMovie);
@@ -302,7 +289,7 @@ void ProcessData<T>::initializeMovieData(ifstream &stream)
         }
         else
         {
-            cout << "[ERROR] Invalid genre: " << genre << endl;
+            cout << "ERROR: " << genre << " Invalid Genre. Try Again." << endl;
         }
 
     }
@@ -328,13 +315,11 @@ void ProcessData<T>::initializeCustomerData(ifstream &stream)
         }
         catch (const invalid_argument &e)
         {
-            cout << "[ERROR] Invalid Customer ID: " << customerIDStr << endl;
+            cout << "ERROR: Invalid Customer ID: " << customerIDStr << endl;
             continue; // Skip invalid entries
         }
 
         string fullName = firstName + " " + lastName;
-
-        cout << "[DEBUG] Reading Customer: ID=" << customerID << ", Name=" << fullName << endl;
 
         storedCustomers->insertInt(customerID, new Customer(customerID, fullName));
     }

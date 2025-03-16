@@ -37,6 +37,11 @@ int Classics::getStock() const {
     return stock;   
 }
 
+string Classics::getMA() const
+{
+    return MAFirstName + " " + MALastName;
+}
+
 bool Classics::adjustStock(const bool increment)
 {
     if (increment && stock < stockCap)
@@ -52,7 +57,7 @@ bool Classics::adjustStock(const bool increment)
     return false; // cannot decrease stock below 0
 }
 
-bool Classics::isSimilar(const Classics* classicsPtr) const
+bool Classics::isSimilar(Classics* classicsPtr) const
 {
     //perform null check
     if (classicsPtr == nullptr)
@@ -110,6 +115,7 @@ bool Classics::operator==(const Movie& movie) const {
 }
 void Classics::print() const
 {
-    cout << itemType << ", " << code << ", " << to_string(stock) << ", " << director << ", " << title << ", " <<
-            MAFirstName << " " << MALastName << " " << releaseMonth << " " << releaseYear << endl;
+    cout << setw(8) << left << itemType << setw(7) << left << code << setw(35) << left << title << setw(23) << left <<
+            director << setw(10) << left << to_string(releaseMonth) << setw(8) << left << to_string(releaseYear) <<
+            to_string(stock) << endl;
 }

@@ -3,8 +3,10 @@
 
 #include <iostream> 
 #include <string>
+#include <iomanip>
 
 using namespace std;
+using std::left;
 
 class Item
 {

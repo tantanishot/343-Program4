@@ -83,6 +83,6 @@ bool Comedy::adjustStock(const bool increment)
 
 void Comedy::print() const
 {
-    cout << itemType << ", " << code << ", " << to_string(stock) << ", " << director << ", " << title << ", " <<
-            releaseYear << endl;
+    cout << setw(8) << left << itemType << setw(7) << left << code << setw(35) << left << title << setw(23) << left <<
+            director << setw(18) << left << to_string(releaseYear) << to_string(stock) << endl;
 }

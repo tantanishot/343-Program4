@@ -15,10 +15,11 @@ class Classics : public Movie
         int getStock() const override;
         string getTitle() const override;
         string getDirector() const override;
+        string getMA() const;
 
         bool adjustStock(const bool increment) override;
 
-        bool isSimilar(const Classics* classicsPtr) const;
+        bool isSimilar(Classics* classicsPtr) const;
 
         string formatSortCriteria() const override;
 

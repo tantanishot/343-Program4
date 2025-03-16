@@ -15,7 +15,7 @@ class Inventory :  public Transactions<T>
 template <typename T>
 bool Inventory<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree)
 {
-    tree->displayInorder();
+    tree->displayInorder(hashtable);
     return true;
 }
 
