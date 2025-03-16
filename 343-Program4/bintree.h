@@ -6,6 +6,7 @@
 #include "customer.h"
 #include "movie.h"
 #include "classics.h"
+#include "iomanip"
 
 using namespace std;
 
@@ -215,20 +216,23 @@ void BinTree<T>::displayInorder() const
   }
   cout << "----------------------------------------------------------------------------------------------" << endl;
   Node<T>* nodePtr = root;
-  if (nodePtr->data->getCode.compare("C"))
+  if (nodePtr->data->getCode().compare("C") == 0)
   {
     cout << "Classics:" << endl;
-    cout << "Genre" 3   "Media" 3  "Title" 30 "Director" 14 "Year" 17 "Stock" << endl;
+    cout << "Genre" << setw(3) << "Media" << setw(3) << "Title" << setw(30) << "Director" << setw(14) << "Month" <<
+            setw(5) << "Year" << setw(4) << "Stock" << endl;
   }
-  else if (nodePtr->data->getCode.compare("D"))
+  else if (nodePtr->data->getCode().compare("D") == 0)
   {
     cout << "Dramas:" << endl;
-    cout << "Genre" 3   "Media" 3  "Title" 30 "Director" 14 "Year" 17 "Stock" << endl;
+    cout << "Genre" << setw(3) << "Media" << setw(3) << "Title" << setw(30) << "Director" << setw(14) << "Year" <<
+            setw(17) << "Stock" << endl;
   }
-  else if (nodePtr->data->getCode.compare("F"))
+  else if (nodePtr->data->getCode().compare("F") == 0)
   {
     cout << "Comedy:" << endl;
-    cout << "Genre" 3   "Media" 3  "Title" 30 "Director" 14 "Year" 17 "Stock" << endl;
+    cout << "Genre" << setw(3) << "Media" << setw(3) << "Title" << setw(30) << "Director" << setw(14) << "Year" <<
+            setw(17) << "Stock" << endl;
   }
   inorderPrint(nodePtr);
   cout << "----------------------------------------------------------------------------------------------" << endl;
