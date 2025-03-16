@@ -6,7 +6,7 @@
 #include "transactions.h"
 
 template <typename T>
-class Return :  public Transactions
+class Return :  public Transactions<T>
 {
     public:
         bool processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree[]) override;

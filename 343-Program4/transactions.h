@@ -3,6 +3,13 @@
 
 #include <iostream> 
 #include <string>
+
+class Customer;
+class Movie;
+template <typename T> class HashTable;
+template <typename T> class BinTree;
+
+using namespace std;
 //temporary since process_data is not used in transactions
 //#include "process_data.h"
 #include "hash_table.h"
@@ -11,6 +18,8 @@
 #include "comedy.h"
 #include "drama.h"
 #include "customer.h"
+
+
 
 struct pastTransactions
 {

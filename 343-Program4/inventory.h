@@ -6,7 +6,7 @@
 #include "transactions.h"
 
 template <typename T>
-class Inventory :  public Transactions
+class Inventory :  public Transactions<T>
 {
     public:
         bool processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree[]);
