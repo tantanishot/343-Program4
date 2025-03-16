@@ -9,11 +9,11 @@ template <typename T>
 class Return :  public Transactions<T>
 {
     public:
-        bool processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree[]) override;
+        bool processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree) override;
 };
 
 template <typename T>
-bool Return<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree[])
+bool Return<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree)
 {
     // assuming movie and customer exists in hashtables and trees
     if (moviePtr->getCode().compare("C") == 0)

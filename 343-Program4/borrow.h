@@ -9,11 +9,11 @@ template <typename T>
 class Borrow :  public Transactions<T>
 {
     public:
-        bool processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree[]);
+        bool processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree) override;
 };
 
 template <typename T>
-bool Borrow<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree[])
+bool Borrow<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree)
 {
     // assumes movie and customer already exists in respective hashtable and tree
     if (moviePtr->getCode().compare("C") == 0)
@@ -21,15 +21,15 @@ bool Borrow<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T
         Classics* classicsPtr = dynamic_cast<Classics*>(moviePtr);
         if (classicsPtr->getStock() == 0) // recommend other similar titles
         {
-            BinTree<T>* btree = tree[2];
-            int numSimilarTitles = btree->findNumSimilarTitles(classicsPtr);
+            int numSimilarTitles = tree->findNumSimilarTitles(classicsPtr);
             int steps = 1;
             int similarTitlesFound = 0;
             bool titleRecommended = false;
             while (!titleRecommended && similarTitlesFound < numSimilarTitles)
             {
                 int index = hashtable->getStringIndex(classicsPtr->formatSortCriteria(), steps);
-                if (hashtable->atIndex(index)->isSimilar(classicsPtr))
+                Classics* similarPtr = dynamic_cast<Classics*>(hashtable->atIndex(index));
+                if (similarPtr->isSimilar(classicsPtr))
                 {
                     if (hashtable->atIndex(index)->getStock() != 0)
                     {

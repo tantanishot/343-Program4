@@ -39,7 +39,7 @@ class BinTree
     bool hasObject(const T* objectPtr) const;
 
     // so far only for classics
-    int findNumSimilarTitles(const T* objectPtr) const;
+    int findNumSimilarTitles(T* objectPtr) const;
 
     void displaySideways() const; // displays the tree sidways
 
@@ -51,7 +51,7 @@ class BinTree
     // You can add private methods here
     void clearTree(Node<T>* deletePtr); // removes all nodes except for root using post order traversal
     Node<T>* findParentNode(const T* objectPtr, Node<T>*& nodePtr) const; // finds the parent node to the given value by traversing in preorder
-    int iterateAllSimilar(const T* objectPtr, Node<T>*& nodePtr, int*& count) const; // inorder traverses and counts all similar objects
+    int iterateAllSimilar(T* objectPtr, Node<T>*& nodePtr, int*& count) const; // inorder traverses and counts all similar objects
     void printSidewaysTree(Node<T>*& nodePtr, int indentTracker) const; // recursively goes through right, root, left and prints
     void inorderPrint(Node<T>*& nodePtr) const;
 };
@@ -161,7 +161,7 @@ bool BinTree<T>::hasObject(const T* objectPtr) const
 
 // so far only needed for classics
 template <typename T>
-int BinTree<T>::findNumSimilarTitles(const T* objectPtr) const
+int BinTree<T>::findNumSimilarTitles(T* objectPtr) const
 {
   if (objectPtr == nullptr)
   {
@@ -213,9 +213,26 @@ void BinTree<T>::displayInorder() const
   {
     cout << "Tree is empty." << endl;
   }
-  cout << "BinTree in Inorder:" << endl;
+  cout << "----------------------------------------------------------------------------------------------" << endl;
   Node<T>* nodePtr = root;
+  if (nodePtr->data->getCode.compare("C"))
+  {
+    cout << "Classics:" << endl;
+    cout << "Genre" 3   "Media" 3  "Title" 30 "Director" 14 "Year" 17 "Stock" << endl;
+  }
+  else if (nodePtr->data->getCode.compare("D"))
+  {
+    cout << "Dramas:" << endl;
+    cout << "Genre" 3   "Media" 3  "Title" 30 "Director" 14 "Year" 17 "Stock" << endl;
+  }
+  else if (nodePtr->data->getCode.compare("F"))
+  {
+    cout << "Comedy:" << endl;
+    cout << "Genre" 3   "Media" 3  "Title" 30 "Director" 14 "Year" 17 "Stock" << endl;
+  }
   inorderPrint(nodePtr);
+  cout << "----------------------------------------------------------------------------------------------" << endl;
+
 }
 
 
@@ -266,7 +283,7 @@ Node<T>* BinTree<T>::findParentNode(const T* objectPtr, Node<T>*& nodePtr) const
 }
 
 template <typename T>
-int BinTree<T>::iterateAllSimilar(const T* objectPtr, Node<T>*& nodePtr, int*& count) const
+int BinTree<T>::iterateAllSimilar(T* objectPtr, Node<T>*& nodePtr, int*& count) const
 {
   // base case
   //stop when the node pointer is null
