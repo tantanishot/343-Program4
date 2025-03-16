@@ -9,17 +9,19 @@ template <typename T>
 class Inventory :  public Transactions
 {
     public:
-        bool processMovie(BinTree<T>* tree[]) override;
+        bool processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree[]);
 };
 
 template <typename T>
-bool Inventory<T>::processMovie(BinTree<T>* tree[])
+bool Inventory<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree[])
 {
     for (int i = 0; i < tree.size(); i++)
     {
         BinTree<T>* btree = tree[i];
         btree->displayInorder();
+        return true;
     }
+    return false;
 }
 
 #endif

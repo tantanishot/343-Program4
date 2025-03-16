@@ -9,19 +9,20 @@ template <typename T>
 class Borrow :  public Transactions
 {
     public:
-        bool processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree) override;
+        bool processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree[]);
 };
 
 template <typename T>
-bool Borrow<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree)
+bool Borrow<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree[])
 {
     // assumes movie and customer already exists in respective hashtable and tree
     if (moviePtr->getCode().compare("C") == 0)
     {
-       Classics* classicsPtr = dynamic_cast< Classics*>(moviePtr);
+        Classics* classicsPtr = dynamic_cast<Classics*>(moviePtr);
         if (classicsPtr->getStock() == 0) // recommend other similar titles
         {
-            int numSimilarTitles = tree->findNumSimilarTitles(classicsPtr);
+            BinTree<T>* btree = tree[2];
+            int numSimilarTitles = btree->findNumSimilarTitles(classicsPtr);
             int steps = 1;
             int similarTitlesFound = 0;
             bool titleRecommended = false;
@@ -32,7 +33,7 @@ bool Borrow<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T
                 {
                     if (hashtable->atIndex(index)->getStock() != 0)
                     {
-                        // recommend title?
+                        // recommend title
 
                         // decreaseStock
                         hashtable->atIndex(index)->adjustStock(false);

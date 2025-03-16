@@ -33,9 +33,6 @@ class ProcessData
         void initializeMovieData(ifstream &stream);
         void initializeCustomerData(ifstream &stream);
 
-        void displayStoredData();
-
-
     private:
         HashTable<T>* storedMovies[3];
         HashTable<Customer>* storedCustomers;  
@@ -106,13 +103,10 @@ void ProcessData<T>::processCommands()
     string line;
     while (getline(commandFile, line)) //reading the full line instead in each part 
     {
- 
-       
         currentLine++;
         stringstream ss(line);
         string transactionType; 
         ss >> transactionType; //Reading BRIH
-
 
         if (transactionType == "B" || transactionType == "R")         // borrow
         {
@@ -222,10 +216,9 @@ void ProcessData<T>::processCommands()
                          << " at line " << currentLine << "\n";
                 }
             }
-            
             else if (transactionType == "R") { 
                     Return<Movie> returnTransaction;  // Create Borrow object
-                    bool success = returnTransaction.processMovie(foundMovie, foundCustomer);
+                    bool success = returnTransaction.processMovie(foundMovie, foundCustomer, storedMovies[genreIndex], movieTree[genreIndex]);
             
                     if (success) {
                         cout << "[SUCCESS] Returned: " << foundMovie->formatSortCriteria() 
@@ -235,37 +228,31 @@ void ProcessData<T>::processCommands()
                              << " at line " << currentLine << "\n";
                     }
             }
-            /*
-            //im not sure how you wanted to approach this... 
-            //regarding time im just going to try to finish the validations
-            int steps = 0;
-            bool customerFound = false;
-            while (!customerFound)
-            {
-                
-            }
-            */
         }
         else if (transactionType == "I")    // inventory
         {
-             //print all types of movies  
-             cout << "[READ] Inventory command at line " << currentLine << "\n";
-             cout << "Displaying Inventory:\n";
- 
-            //from fdc
+            //print all types of movies  
+            cout << "[READ] Inventory command at line " << currentLine << "\n";
+            cout << "Displaying Inventory:\n";
 
-           
+            Inventory<Movie> inventoryTransaction;
+            inventoryTransaction.processMovie(nullptr, nullptr, nullptr, movieTree);
         }
         else if (transactionType == "H")    // history
         {
             int customerID;
             ss >> customerID;
-        
-            // Debug: Print when History is read
-            cout << "[READ] History command at line " << currentLine << " for customer " << customerID << "\n";
 
-           
             //check if customer is in hashtable to print inventroy then pring transaction history
+            Customer* foundCustomer = storedCustomers->retrieveInt(customerID);
+            if(!foundCustomer)
+            {
+                cout << "[ERROR] Customer ID " << customerID << " not found at line " << currentLine << "\n";
+                continue; 
+            }
+
+            History<Movie> historyTransaction;
+            historyTransaction.processMovie(nullptr, foundCustomer, nullptr, nullptr);
         }
         else                                // invalid commands
         {
@@ -367,38 +354,8 @@ void ProcessData<T>::initializeCustomerData(ifstream &stream)
 
         cout << "[DEBUG] Reading Customer: ID=" << customerID << ", Name=" << fullName << endl;
 
-        //doing that passed it in as movei for some reason
-        //Customer* newCustomer = new Customer(customerID, fullName);
         storedCustomers->insertInt(customerID, new Customer(customerID, fullName));
     }
 }
-
-
-// I had to search this up but 
-//since theres two types of printing I explicitly calleed display data
-template <>
-void ProcessData<Movie>::displayStoredData()
-{
-    cout << "\n=== Movie Hash Table ===" << endl;
-    for (int i = 0; i < NUM_GENRES; i++)
-    {
-        if (storedMovies[i])
-        {
-            storedMovies[i]->display();
-        }
-    }
-}
-
-
-template <>
-void ProcessData<Customer>::displayStoredData()
-{
-    cout << "\n=== Customer Hash Table ===" << endl;
-    if (storedCustomers)
-    {
-        storedCustomers->display();
-    }
-}
-
 
 #endif

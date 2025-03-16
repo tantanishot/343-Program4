@@ -22,13 +22,13 @@ int main() {
     cout << "Classics Sorting Key: " << classic1->formatSortCriteria() << endl;
 
     // Test operator<
-    cout << "Comparing Comedies (Should be 0): " << (*comedy1 < comedy2) << endl;
-    cout << "Comparing Dramas (Should be 1): " << (*drama2 < drama1) << endl;
-    cout << "Comparing Classics (Should be 1): " << (*classic2 < classic1) << endl;
+    cout << "Comparing Comedies (Should be 0): " << (comedy1 < comedy2) << endl;
+    cout << "Comparing Dramas (Should be 1): " << (drama2 < drama1) << endl;
+    cout << "Comparing Classics (Should be 1): " << (classic2 < classic1) << endl;
 
     //  Test operator==
-    cout << "Are these Dramas equal? (Should be 0): " << (*drama1 == drama2) << endl;
-    cout << "Are these Classics equal? (Should be 0): " << (*classic1 == classic2) << endl;
+    cout << "Are these Dramas equal? (Should be 0): " << (drama1 == drama2) << endl;
+    cout << "Are these Classics equal? (Should be 0): " << (classic1 == classic2) << endl;
 
     // Cleanup
     delete comedy1;

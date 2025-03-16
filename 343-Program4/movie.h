@@ -18,8 +18,6 @@ class Movie : public DVD
 
         virtual string formatSortCriteria() const = 0;
         
-        //i used reference casting which i searched it up 
-        // 
         virtual bool operator<(const Movie& movie) const = 0;
         virtual bool operator>(const Movie& movie) const = 0;
         virtual bool operator==(const Movie& movie) const = 0;

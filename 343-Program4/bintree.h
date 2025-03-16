@@ -275,8 +275,8 @@ int BinTree<T>::iterateAllSimilar(const T* objectPtr, Node<T>*& nodePtr, int*& c
       return 0;
   }
 
-  const Classics* classicPtr = dynamic_cast<const Classics*>(objectPtr);
-  const Classics* nodeClassicPtr = dynamic_cast<const Classics*>(nodePtr->data);
+  Classics* classicPtr = dynamic_cast<Classics*>(objectPtr);
+  Classics* nodeClassicPtr = dynamic_cast<Classics*>(nodePtr->data);
 
   if (classicPtr != nullptr && nodeClassicPtr != nullptr) {
       if (classicPtr->isSimilar(nodeClassicPtr)) { // check current node

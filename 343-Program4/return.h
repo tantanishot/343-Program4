@@ -9,16 +9,16 @@ template <typename T>
 class Return :  public Transactions
 {
     public:
-        bool processMovie(Movie* moviePtr, Customer* customerPtr) override;
+        bool processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree[]) override;
 };
 
 template <typename T>
-bool Return<T>::processMovie(Movie* moviePtr, Customer* customerPtr)
+bool Return<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree[])
 {
     // assuming movie and customer exists in hashtables and trees
     if (moviePtr->getCode().compare("C") == 0)
     {
-       Classics* classicsPtr = dynamic_cast<Classics*>(moviePtr);
+        Classics* classicsPtr = dynamic_cast<Classics*>(moviePtr);
         if (customerPtr->hasTransaction(classicsPtr))
         {
             classicsPtr->adjustStock(true);

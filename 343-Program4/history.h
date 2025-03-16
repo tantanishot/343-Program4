@@ -9,11 +9,11 @@ template <typename T>
 class History :  public Transactions
 {
     public:
-        bool processMovie(Customer* customerPtr) override;
+        bool processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree[]);
 };
 
 template <typename T>
-bool History<T>::processMovie(Customer* customerPtr)
+bool History<T>::processMovie(Movie* moviePtr, Customer* customerPtr, HashTable<T>* hashtable, BinTree<T>* tree[])
 {
     if (customerPtr != nullptr)
     {
