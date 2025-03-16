@@ -377,7 +377,6 @@ void BinTree<T>::inorderPrint(Node<T>*& nodePtr, vector<Movie*>*& seenMovies, Ha
         // add any to vector seenMovies
       bool seen = false;
       Classics* newNodePtr = dynamic_cast <Classics*>(nodePtr->data);
-      cout << "test 1" << endl;////////////////////////////////////////////////////////////////////
       if (!seenMovies->empty())
       {
         for (int i = 0; i < seenMovies->size(); i++)
